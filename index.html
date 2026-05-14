@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BitácoraSO — Sistemas Operativos</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #060e20; }
+  ::-webkit-scrollbar-thumb { background: #2d3449; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #424754; }
+  body { font-family: 'IBM Plex Sans', sans-serif; }
+  code, pre, .mono { font-family: 'IBM Plex Mono', monospace; }
+  .grid-bg {
+    background-image: linear-gradient(rgba(173,198,255,0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(173,198,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .fade-up { animation: fadeUp 0.6s ease forwards; }
+  .fade-up-1 { animation-delay: 0.1s; opacity: 0; }
+  .fade-up-2 { animation-delay: 0.25s; opacity: 0; }
+  .fade-up-3 { animation-delay: 0.4s; opacity: 0; }
+</style>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        bg:          "#0b1326",
+        surface:     "#0b1326",
+        "surf-low":  "#131b2e",
+        "surf-mid":  "#171f33",
+        "surf-high": "#222a3d",
+        "surf-top":  "#2d3449",
+        border:      "#424754",
+        muted:       "#8c909f",
+        text:        "#dae2fd",
+        "text-dim":  "#c2c6d6",
+        primary:     "#adc6ff",
+        "primary-c": "#4d8eff",
+        secondary:   "#4edea3",
+        tertiary:    "#ffb95f",
+        danger:      "#ffb4ab",
+      }
+    }
+  }
+}
+</script>
+</head>
+<body class="bg-bg text-text selection:bg-primary-c/30 selection:text-primary">
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-surface/95 backdrop-blur border-b border-border h-16 flex items-center px-6 md:px-16">
+  <a href="inicio.html" class="mono font-bold text-primary text-lg mr-10 shrink-0">BitácoraSO</a>
+  <nav class="hidden md:flex items-center gap-7 text-sm">
+    <a href="inicio.html"   class="text-primary border-b border-primary pb-0.5">Inicio</a>
+    <a href="apunte.html"   class="text-text-dim hover:text-primary transition-colors">Apuntes</a>
+    <a href="glosario.html" class="text-text-dim hover:text-primary transition-colors">Glosario</a>
+    <a href="programas.html" class="text-text-dim hover:text-primary transition-colors">Programas</a>
+  </nav>
+  <div class="ml-auto flex items-center gap-3">
+    <a href="https://github.com/Julio-Atenco" target="_blank" rel="noopener"
+       class="flex items-center gap-1.5 text-xs text-text-dim hover:text-primary transition-colors border border-border rounded px-3 py-1.5">
+      <span class="material-symbols-outlined text-[16px]">code</span> GitHub
+    </a>
+    <!-- Mobile menu toggle -->
+    <button id="menu-btn" class="md:hidden text-text-dim">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+  </div>
+</header>
+<!-- Mobile nav -->
+<div id="mobile-nav" class="hidden md:hidden bg-surf-low border-b border-border px-6 py-4 space-y-3 text-sm">
+  <a href="inicio.html"    class="block text-primary">Inicio</a>
+  <a href="apunte.html"    class="block text-text-dim">Apuntes</a>
+  <a href="glosario.html"  class="block text-text-dim">Glosario</a>
+  <a href="programas.html" class="block text-text-dim">Programas</a>
+</div>
+
+<main>
+  <!-- HERO -->
+  <section class="grid-bg relative overflow-hidden px-6 md:px-16 py-20 md:py-28">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-c/5 via-transparent to-secondary/5 pointer-events-none"></div>
+    <div class="max-w-2xl fade-up fade-up-1">
+      <div class="mono text-xs text-muted mb-4 flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+        UTM · Ingeniería en Sistemas · 2024–2025
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-text leading-tight mb-5">
+        Apuntes y Programas de<br/>
+        <span class="text-primary">Sistemas Operativos</span>
+      </h1>
+      <p class="text-text-dim text-lg leading-relaxed mb-8">
+        Repositorio personal de notas, prácticas y código de la materia. Procesos, memoria, concurrencia
+        y más, organizados para repasar rápido.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a href="apunte.html"
+           class="bg-primary-c text-bg font-semibold px-5 py-2.5 rounded text-sm hover:bg-primary transition-colors">
+          Ver apuntes
+        </a>
+        <a href="programas.html"
+           class="border border-border text-text-dim px-5 py-2.5 rounded text-sm hover:border-primary hover:text-primary transition-colors">
+          Ver programas
+        </a>
+      </div>
+    </div>
+    <!-- Code snippet decoration -->
+    <div class="absolute right-16 top-1/2 -translate-y-1/2 hidden xl:block fade-up fade-up-2">
+      <div class="bg-surf-high border border-border rounded-lg shadow-2xl rotate-1 w-72">
+        <div class="flex items-center gap-1.5 px-4 py-2.5 border-b border-border">
+          <span class="w-2.5 h-2.5 rounded-full bg-danger"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+          <span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+          <span class="mono text-[11px] text-muted ml-2">planificador.c</span>
+        </div>
+        <pre class="mono text-xs text-secondary leading-relaxed p-4">void planificar(void) {
+  struct tarea *ant, *sig;
+  ant = tarea_actual;
+  sig = elegir_siguiente(cq);
+  if (ant != sig)
+    cambio_contexto(ant, sig);
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="border-y border-border bg-surf-low fade-up fade-up-2">
+    <div class="max-w-5xl mx-auto px-6 md:px-16 py-5 flex flex-wrap gap-8 text-sm">
+      <div class="flex items-center gap-2 text-text-dim">
+        <span class="material-symbols-outlined text-primary text-[18px]">article</span>
+        <span><span class="text-text font-semibold">12</span> Apuntes</span>
+      </div>
+      <div class="flex items-center gap-2 text-text-dim">
+        <span class="material-symbols-outlined text-secondary text-[18px]">terminal</span>
+        <span><span class="text-text font-semibold">8</span> Programas</span>
+      </div>
+      <div class="flex items-center gap-2 text-text-dim">
+        <span class="material-symbols-outlined text-tertiary text-[18px]">book</span>
+        <span><span class="text-text font-semibold">40+</span> Términos en el glosario</span>
+      </div>
+      <a href="https://mixteco.utm.mx/~gcgero/" target="_blank" rel="noopener"
+         class="flex items-center gap-2 text-text-dim hover:text-primary transition-colors ml-auto">
+        <span class="material-symbols-outlined text-[18px]">school</span>
+        <span>Página del profesor</span>
+        <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- CONTENT GRID -->
+  <section class="max-w-6xl mx-auto px-6 md:px-16 py-14 fade-up fade-up-3">
+    <div class="flex justify-between items-end mb-8">
+      <div>
+        <h2 class="text-2xl font-bold text-text">Apuntes Recientes</h2>
+        <p class="text-text-dim mt-1 text-sm">Últimas notas y prácticas de la materia.</p>
+      </div>
+      <a href="apunte.html" class="text-primary text-sm hover:underline flex items-center gap-1">
+        Ver todos <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+      </a>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Card destacada -->
+      <div class="md:col-span-2 group bg-surf-mid border border-border rounded-lg overflow-hidden hover:border-primary transition-all">
+        <div class="h-44 bg-surf-high overflow-hidden relative">
+          <div class="absolute inset-0 bg-gradient-to-br from-primary-c/20 to-secondary/10 flex items-center justify-center">
+            <pre class="mono text-xs text-secondary/70 leading-relaxed select-none px-8">
+void planificar_rr(int quantum) {
+  Cola *listo = &amp;cola_listos;
+  Proceso *p;
+  while ((p = desencolar(listo))) {
+    ejecutar(p, quantum);
+    if (!termino(p))
+      encolar(listo, p);
+  }
+}</pre>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="flex gap-2 mb-3">
+            <span class="bg-primary-c/15 text-primary text-xs px-2.5 py-0.5 rounded-full mono">Planificación</span>
+            <span class="bg-secondary/10 text-secondary text-xs px-2.5 py-0.5 rounded-full mono">Round Robin</span>
+          </div>
+          <h3 class="text-lg font-semibold text-text mb-2 group-hover:text-primary transition-colors">
+            Algoritmos de Planificación de CPU
+          </h3>
+          <p class="text-text-dim text-sm leading-relaxed mb-4">
+            FCFS, SJF, Round Robin y Prioridad. Comparativa con diagramas de Gantt y análisis de tiempo de espera promedio.
+          </p>
+          <a href="apunte.html" class="text-primary text-sm font-medium hover:underline flex items-center gap-1">
+            Leer apunte <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Tarjetas laterales -->
+      <div class="flex flex-col gap-6">
+        <div class="group bg-surf-mid border border-border rounded-lg p-5 hover:border-secondary transition-all flex flex-col flex-1">
+          <span class="bg-secondary/10 text-secondary text-xs px-2.5 py-0.5 rounded-full mono w-fit mb-3">Memoria</span>
+          <h3 class="font-semibold text-text mb-2 group-hover:text-secondary transition-colors">Paginación y Segmentación</h3>
+          <p class="text-text-dim text-xs leading-relaxed flex-1">Gestión de memoria virtual: tablas de páginas, TLB y traducción de direcciones.</p>
+          <div class="border-t border-border mt-4 pt-3 flex justify-between items-center">
+            <span class="mono text-[11px] text-muted">Mar 2025</span>
+            <span class="material-symbols-outlined text-secondary text-[18px]">arrow_forward</span>
+          </div>
+        </div>
+        <div class="group bg-surf-mid border border-border rounded-lg p-5 hover:border-tertiary transition-all flex flex-col flex-1">
+          <span class="bg-tertiary/10 text-tertiary text-xs px-2.5 py-0.5 rounded-full mono w-fit mb-3">Concurrencia</span>
+          <h3 class="font-semibold text-text mb-2 group-hover:text-tertiary transition-colors">Deadlock y Semáforos</h3>
+          <p class="text-text-dim text-xs leading-relaxed flex-1">Condiciones de Coffman, prevención de interbloqueos y sincronización con semáforos.</p>
+          <div class="border-t border-border mt-4 pt-3 flex justify-between items-center">
+            <span class="mono text-[11px] text-muted">Abr 2025</span>
+            <span class="material-symbols-outlined text-tertiary text-[18px]">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta horizontal -->
+      <div class="md:col-span-3 flex flex-col md:flex-row group bg-surf-low border border-border rounded-lg overflow-hidden hover:border-primary transition-all">
+        <div class="md:w-48 bg-surf-high flex items-center justify-center p-6 shrink-0">
+          <span class="material-symbols-outlined text-5xl text-primary/40">terminal</span>
+        </div>
+        <div class="p-6">
+          <span class="mono text-[11px] text-muted block mb-1">— Práctica de laboratorio</span>
+          <h3 class="font-semibold text-text mb-1 group-hover:text-primary transition-colors">
+            Implementación de Productor-Consumidor en C
+          </h3>
+          <p class="text-text-dim text-sm mb-3">
+            Solución al problema clásico usando mutex y semáforos POSIX. Código comentado y compilable en Linux.
+          </p>
+          <a href="programas.html" class="text-primary text-sm font-medium hover:underline flex items-center gap-1 w-fit">
+            Ver código <span class="material-symbols-outlined text-[14px]">open_in_new</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEMAS PRINCIPALES -->
+  <section class="border-t border-border bg-surf-low py-14 fade-up fade-up-3">
+    <div class="max-w-6xl mx-auto px-6 md:px-16">
+      <h2 class="text-2xl font-bold text-text mb-2">Temas de la Materia</h2>
+      <p class="text-text-dim text-sm mb-8">Navega por unidad temática.</p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <a href="apunte.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-primary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-primary mb-2 block">memory</span>
+          <span class="text-sm font-medium text-text group-hover:text-primary transition-colors">Gestión de Procesos</span>
+        </a>
+        <a href="glosario.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-secondary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-secondary mb-2 block">storage</span>
+          <span class="text-sm font-medium text-text group-hover:text-secondary transition-colors">Gestión de Memoria</span>
+        </a>
+        <a href="programas.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-tertiary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-tertiary mb-2 block">sync</span>
+          <span class="text-sm font-medium text-text group-hover:text-tertiary transition-colors">Concurrencia</span>
+        </a>
+        <a href="glosario.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-primary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-primary mb-2 block">folder_open</span>
+          <span class="text-sm font-medium text-text group-hover:text-primary transition-colors">Sistemas de Archivos</span>
+        </a>
+        <a href="programas.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-secondary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-secondary mb-2 block">terminal</span>
+          <span class="text-sm font-medium text-text group-hover:text-secondary transition-colors">Llamadas al Sistema</span>
+        </a>
+        <a href="apunte.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-tertiary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-tertiary mb-2 block">device_hub</span>
+          <span class="text-sm font-medium text-text group-hover:text-tertiary transition-colors">E/S y Drivers</span>
+        </a>
+        <a href="apunte.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-primary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-primary mb-2 block">lock</span>
+          <span class="text-sm font-medium text-text group-hover:text-primary transition-colors">Seguridad y Protección</span>
+        </a>
+        <a href="glosario.html" class="group bg-surf-mid border border-border rounded-lg p-4 hover:border-secondary transition-all text-center">
+          <span class="material-symbols-outlined text-2xl text-secondary mb-2 block">book</span>
+          <span class="text-sm font-medium text-text group-hover:text-secondary transition-colors">Glosario SO</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-bg border-t border-border py-10 mt-0">
+  <div class="max-w-6xl mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-start gap-8">
+    <div>
+      <div class="mono font-bold text-primary text-base mb-1">BitácoraSO</div>
+      <p class="text-muted text-xs leading-relaxed max-w-xs">
+        Apuntes personales de la materia Sistemas Operativos.<br/>
+        Universidad Tecnológica de la Mixteca.
+      </p>
+      <p class="text-muted text-[11px] mt-3">© 2025 Julio Atenco · Todos los derechos reservados</p>
+    </div>
+    <div class="flex flex-wrap gap-x-12 gap-y-6 text-sm">
+      <div>
+        <p class="text-text font-semibold mb-3 text-xs uppercase tracking-wider mono">Páginas</p>
+        <div class="space-y-2">
+          <a href="inicio.html"    class="block text-text-dim hover:text-primary transition-colors">Inicio</a>
+          <a href="apunte.html"    class="block text-text-dim hover:text-primary transition-colors">Apuntes</a>
+          <a href="glosario.html"  class="block text-text-dim hover:text-primary transition-colors">Glosario</a>
+          <a href="programas.html" class="block text-text-dim hover:text-primary transition-colors">Programas</a>
+        </div>
+      </div>
+      <div>
+        <p class="text-text font-semibold mb-3 text-xs uppercase tracking-wider mono">Enlaces</p>
+        <div class="space-y-2">
+          <a href="https://www.utm.mx/web/" target="_blank" rel="noopener"
+             class="flex items-center gap-1 text-text-dim hover:text-tertiary transition-colors">
+            <span class="material-symbols-outlined text-[14px]">school</span> UTM
+          </a>
+          <a href="https://github.com/Julio-Atenco" target="_blank" rel="noopener"
+             class="flex items-center gap-1 text-text-dim hover:text-tertiary transition-colors">
+            <span class="material-symbols-outlined text-[14px]">code</span> GitHub Personal
+          </a>
+          <a href="https://mixteco.utm.mx/~gcgero/" target="_blank" rel="noopener"
+             class="flex items-center gap-1 text-text-dim hover:text-tertiary transition-colors">
+            <span class="material-symbols-outlined text-[14px]">person</span> Página del Profesor
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('menu-btn').addEventListener('click', function() {
+    document.getElementById('mobile-nav').classList.toggle('hidden');
+  });
+</script>
+</body>
+</html>
