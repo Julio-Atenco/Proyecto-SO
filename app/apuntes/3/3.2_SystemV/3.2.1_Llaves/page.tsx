@@ -92,12 +92,10 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipo">Prototipo de ftok</DocH2>
-      <CodeBlock filename="prototipo.h">
-{`#include <sys/types.h>
+      <CodeBlock filename="prototipo.h" code={`#include <sys/types.h>
 #include <sys/ipc.h>
 
-key_t ftok(const char *pathname, int proj_id);`}
-      </CodeBlock>
+key_t ftok(const char *pathname, int proj_id);`} />
       <DocP>
         <InlineCode>pathname</InlineCode> es el nombre de un archivo ordinario
         existente y accesible; <InlineCode>proj_id</InlineCode> es un entero

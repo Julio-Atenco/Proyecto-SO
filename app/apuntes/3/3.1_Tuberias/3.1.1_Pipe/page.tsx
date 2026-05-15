@@ -114,11 +114,9 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipo">Prototipo de la función</DocH2>
-      <CodeBlock filename="prototipo.h">
-{`#include <unistd.h>
+      <CodeBlock filename="prototipo.h" code={`#include <unistd.h>
 
-int pipe(int filedes[2]);`}
-      </CodeBlock>
+int pipe(int filedes[2]);`} />
       <DocP>
         El valor retornado es <strong>0</strong> si todo está correcto y{" "}
         <strong>-1</strong> si existe un error. Los dos descriptores se

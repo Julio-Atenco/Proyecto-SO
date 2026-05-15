@@ -100,13 +100,11 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipo">Prototipos</DocH2>
-      <CodeBlock filename="prototipos.h">
-{`#include <sys/types.h>
+      <CodeBlock filename="prototipos.h" code={`#include <sys/types.h>
 #include <sys/wait.h>
 
 pid_t wait    (int *stat_loc);
-pid_t waitpid (pid_t pid, int *wstatus, int options);`}
-      </CodeBlock>
+pid_t waitpid (pid_t pid, int *wstatus, int options);`} />
       <DocP>
         Si <InlineCode>wait()</InlineCode> retorna por la terminación o
         detención de un hijo, el valor de retorno es positivo y corresponde

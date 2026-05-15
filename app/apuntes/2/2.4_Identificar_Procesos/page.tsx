@@ -81,15 +81,13 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipos">Prototipos</DocH2>
-      <CodeBlock filename="prototipos.h">
-{`#include <sys/types.h>
+      <CodeBlock filename="prototipos.h" code={`#include <sys/types.h>
 #include <unistd.h>
 
 pid_t getpid (void);   /* PID del proceso que la invoca         */
 pid_t getppid(void);   /* PID del padre del proceso actual      */
 pid_t getpgrp(void);   /* PGID del grupo del proceso actual     */
-pid_t setsid (void);   /* hace al proceso lider de nuevo grupo  */`}
-      </CodeBlock>
+pid_t setsid (void);   /* hace al proceso lider de nuevo grupo  */`} />
       <DocP>
         Además de la relación padre–hijo, los procesos pueden organizarse en{" "}
         <strong>grupos de procesos</strong>, lo que permite al sistema

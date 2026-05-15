@@ -88,12 +88,10 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipo">Prototipo de fork</DocH2>
-      <CodeBlock filename="prototipo.h">
-{`#include <sys/types.h>
+      <CodeBlock filename="prototipo.h" code={`#include <sys/types.h>
 #include <unistd.h>
 
-pid_t fork(void);`}
-      </CodeBlock>
+pid_t fork(void);`} />
 
       <DocH2 id="valor-retorno">Valor de retorno</DocH2>
       <DocP>

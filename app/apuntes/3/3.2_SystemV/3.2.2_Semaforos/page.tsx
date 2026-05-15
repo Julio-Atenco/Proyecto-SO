@@ -147,25 +147,21 @@ export default function Page() {
         <InlineCode>semid_ds</InlineCode> definida en{" "}
         <InlineCode>&lt;sys/sem.h&gt;</InlineCode>:
       </DocP>
-      <CodeBlock filename="semid_ds.h">
-{`struct semid_ds {
+      <CodeBlock filename="semid_ds.h" code={`struct semid_ds {
     struct ipc_perm sem_perm;   /* permisos y propietarios */
     time_t          sem_otime;  /* ultima operacion */
     time_t          sem_ctime;  /* ultimo cambio */
     unsigned long   sem_nsems;  /* numero de semaforos del conjunto */
-};`}
-      </CodeBlock>
+};`} />
 
       <DocH2 id="prototipos">Prototipos</DocH2>
-      <CodeBlock filename="prototipos.h">
-{`#include <sys/types.h>
+      <CodeBlock filename="prototipos.h" code={`#include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
 
 int semget(key_t key, int nsems, int semflg);
 int semctl(int semid, int semnum, int cmd, ...);
-int semop (int semid, struct sembuf *sops, size_t nsops);`}
-      </CodeBlock>
+int semop (int semid, struct sembuf *sops, size_t nsops);`} />
       <DocUl>
         <DocLi>
           <span>

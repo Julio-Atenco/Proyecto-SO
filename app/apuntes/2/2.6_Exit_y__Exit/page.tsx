@@ -82,13 +82,11 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipos">Prototipos</DocH2>
-      <CodeBlock filename="prototipos.h">
-{`#include <unistd.h>
+      <CodeBlock filename="prototipos.h" code={`#include <unistd.h>
 #include <stdlib.h>
 
 void _exit (int status);   /* terminacion inmediata, sin limpieza */
-void  exit (int status);   /* hace limpieza y luego llama a _exit */`}
-      </CodeBlock>
+void  exit (int status);   /* hace limpieza y luego llama a _exit */`} />
 
       <DocH2 id="diferencia">Diferencia entre exit() y _exit()</DocH2>
       <DocP>

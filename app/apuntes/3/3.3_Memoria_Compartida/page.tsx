@@ -116,15 +116,13 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipos">Prototipos</DocH2>
-      <CodeBlock filename="prototipos.h">
-{`#include <sys/ipc.h>
+      <CodeBlock filename="prototipos.h" code={`#include <sys/ipc.h>
 #include <sys/shm.h>
 
 int   shmget(key_t key, size_t size, int shmflg);
 void *shmat (int shmid, const void *shmaddr, int shmflg);
 int   shmdt (const void *shmaddr);
-int   shmctl(int shmid, int cmd, struct shmid_ds *buf);`}
-      </CodeBlock>
+int   shmctl(int shmid, int cmd, struct shmid_ds *buf);`} />
       <DocUl>
         <DocLi>
           <span>
