@@ -43,26 +43,7 @@ export default function Nav() {
           })}
         </nav>
 
-        {/* Right side */}
-        <div className="ml-auto flex items-center gap-3">
-          <a
-            href="https://github.com/Julio-Atenco"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-1.5 text-xs text-text-dim hover:text-primary transition-colors border border-border rounded px-3 py-1.5"
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>code</span>
-            GitHub
-          </a>
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden text-text-dim hover:text-primary transition-colors"
-            aria-label="Menú"
-          >
-            <span className="material-symbols-outlined">{open ? "close" : "menu"}</span>
-          </button>
-        </div>
+        
       </header>
 
       {/* Mobile dropdown */}

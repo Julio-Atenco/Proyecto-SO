@@ -8,9 +8,10 @@ const pageLinks = [
 ];
 
 const externalLinks = [
-  { href: "https://www.utm.mx/web/",         label: "UTM",               icon: "school" },
-  { href: "https://github.com/Julio-Atenco", label: "GitHub Personal",   icon: "code" },
-  { href: "https://mixteco.utm.mx/~gcgero/", label: "Página del Profesor", icon: "person" },
+  { href: "https://www.utm.mx/web/",         label: "UTM"},
+  { href: "https://mixteco.utm.mx/~gcgero/", label: "Página del Profesor" },
+  { href: "https://github.com/Julio-Atenco", label: "GitHub Personal de Julio Atenco" },
+  { href: "https://github.com/LGSC-German", label: "GitHub Personal de German López" },
 ];
 
 export default function Footer() {
@@ -25,9 +26,7 @@ export default function Footer() {
             <br />
             Universidad Tecnológica de la Mixteca.
           </p>
-          <p className="text-muted text-[11px] mt-3">
-            © {new Date().getFullYear()} Julio Atenco · Todos los derechos reservados
-          </p>
+          
         </div>
 
         {/* Links */}
@@ -56,7 +55,7 @@ export default function Footer() {
               Enlaces
             </p>
             <div className="space-y-2">
-              {externalLinks.map(({ href, label, icon }) => (
+              {externalLinks.map(({ href, label }) => (
                 <a
                   key={href}
                   href={href}
@@ -64,9 +63,6 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="flex items-center gap-1.5 text-text-dim hover:text-tertiary transition-colors"
                 >
-                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>
-                    {icon}
-                  </span>
                   {label}
                 </a>
               ))}
