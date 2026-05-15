@@ -1,3 +1,4 @@
+import Navbar_Apuntes from "@/components/Navbar_Apuntes";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -144,6 +145,7 @@ const toc = [
 export default function ApuntesPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 md:px-16 py-12 flex gap-12">
+      <Navbar_Apuntes />
       {/* Artículo principal */}
       <article className="flex-1 min-w-0">
         {/* Breadcrumb */}
@@ -177,6 +179,7 @@ export default function ApuntesPage() {
             </span>
           </div>
         </header>
+        
 
         {/* Imagen / banner */}
         <div className="w-full h-52 rounded-lg overflow-hidden mb-10 bg-surf-high border border-border flex items-center justify-center relative">
