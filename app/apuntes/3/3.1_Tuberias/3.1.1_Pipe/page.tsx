@@ -139,15 +139,11 @@ int pipe(int filedes[2]);`} />
         Programa para crear una tubería desde el padre, heredarla al hijo y
         enviar un mensaje del hijo al padre:
       </DocP>
-      <CodeBlock filename="pipe.c" lang="c">
-        {pipeC}
-      </CodeBlock>
+      <CodeBlock filename="pipe.c" lang="c" code={pipeC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
       <DocP>Compilación y ejecución en GNU/Linux:</DocP>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH3 id="explicacion">¿Qué está pasando?</DocH3>
       <DocUl>

@@ -111,9 +111,7 @@ export default function Page() {
         invocar <InlineCode>wait()</InlineCode>. Durante esos 30 segundos el
         hijo queda en estado <em>zombi</em>:
       </DocP>
-      <CodeBlock filename="zombi_malo.c" lang="c">
-        {zombiMaloC}
-      </CodeBlock>
+      <CodeBlock filename="zombi_malo.c" lang="c" code={zombiMaloC} />
       <DocP>Paso a paso:</DocP>
       <DocUl>
         <DocLi><span>El padre crea un hijo con <InlineCode>fork()</InlineCode>.</span></DocLi>
@@ -135,22 +133,16 @@ export default function Page() {
         El padre invoca <InlineCode>wait()</InlineCode> inmediatamente; el
         hijo nunca llega a estar en zombi observable:
       </DocP>
-      <CodeBlock filename="zombi.c" lang="c">
-        {zombiBuenoC}
-      </CodeBlock>
+      <CodeBlock filename="zombi.c" lang="c" code={zombiBuenoC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH2 id="observar">Cómo observar zombis</DocH2>
       <DocP>
         Mientras el padre del caso 1 duerme, desde otra terminal:
       </DocP>
-      <CodeBlock filename="terminal" lang="bash">
-        {psSalida}
-      </CodeBlock>
+      <CodeBlock filename="terminal" lang="bash" code={psSalida} />
       <DocP>
         La <strong>Z</strong> en la primera columna y la palabra{" "}
         <InlineCode>&lt;defunct&gt;</InlineCode> al final del nombre del

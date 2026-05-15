@@ -109,12 +109,10 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipo">Prototipo de mkfifo</DocH2>
-      <CodeBlock filename="prototipo.h">
-{`#include <sys/types.h>
+      <CodeBlock filename="prototipo.h" code={`#include <sys/types.h>
 #include <sys/stat.h>
 
-int mkfifo(const char *pathname, mode_t mode);`}
-      </CodeBlock>
+int mkfifo(const char *pathname, mode_t mode);`} />
       <DocP>
         <InlineCode>pathname</InlineCode> es el nombre y ruta del archivo FIFO
         que se va a crear; <InlineCode>mode</InlineCode> son los permisos del
@@ -134,14 +132,10 @@ int mkfifo(const char *pathname, mode_t mode);`}
         Programa que crea una tubería con nombre y envía un mensaje del hijo al
         padre:
       </DocP>
-      <CodeBlock filename="fifo.c" lang="c">
-        {fifoC}
-      </CodeBlock>
+      <CodeBlock filename="fifo.c" lang="c" code={fifoC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH3 id="detalles">Detalles importantes</DocH3>
       <DocUl>

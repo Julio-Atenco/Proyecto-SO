@@ -112,14 +112,10 @@ key_t ftok(const char *pathname, int proj_id);`} />
       </DocP>
 
       <DocH2 id="codigo">Código de ejemplo</DocH2>
-      <CodeBlock filename="llaves.c" lang="c">
-        {llavesC}
-      </CodeBlock>
+      <CodeBlock filename="llaves.c" lang="c" code={llavesC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH3 id="observaciones">Observaciones</DocH3>
       <DocUl>

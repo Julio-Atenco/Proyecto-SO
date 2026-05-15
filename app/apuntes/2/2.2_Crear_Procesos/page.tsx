@@ -152,14 +152,10 @@ pid_t fork(void);`} />
         manera distinta, forzando la duplicación física de la página de
         memoria (COW):
       </DocP>
-      <CodeBlock filename="fork_cow.c" lang="c">
-        {forkCowC}
-      </CodeBlock>
+      <CodeBlock filename="fork_cow.c" lang="c" code={forkCowC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
       <DocP>
         El orden en que aparecen las líneas no es determinista: depende del
         planificador. Lo importante es que cada proceso imprime su propio PID

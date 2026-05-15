@@ -160,14 +160,10 @@ int   shmctl(int shmid, int cmd, struct shmid_ds *buf);`} />
         hijo se une al segmento, lee el mensaje y termina. Finalmente el padre
         libera el segmento.
       </DocP>
-      <CodeBlock filename="memoria.c" lang="c">
-        {memoriaC}
-      </CodeBlock>
+      <CodeBlock filename="memoria.c" lang="c" code={memoriaC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH3 id="detalles">Detalles importantes</DocH3>
       <DocUl>

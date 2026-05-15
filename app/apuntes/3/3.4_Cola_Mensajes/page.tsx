@@ -128,8 +128,7 @@ export default function Page() {
       </DocP>
 
       <DocH2 id="prototipos">Prototipos</DocH2>
-      <CodeBlock filename="prototipos.h">
-{`#include <sys/types.h>
+      <CodeBlock filename="prototipos.h" code={`#include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
 
@@ -137,8 +136,7 @@ int     msgget(key_t key, int msgflg);
 int     msgctl(int msqid, int cmd, struct msqid_ds *buf);
 int     msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflg);
 ssize_t msgrcv(int msqid, void *msgp, size_t msgsz,
-               long msgtyp, int msgflg);`}
-      </CodeBlock>
+               long msgtyp, int msgflg);`} />
       <DocUl>
         <DocLi>
           <span>
@@ -185,12 +183,10 @@ ssize_t msgrcv(int msqid, void *msgp, size_t msgsz,
       </DocUl>
 
       <DocH2 id="msgbuf">Estructura msgbuf</DocH2>
-      <CodeBlock filename="msgbuf.h">
-{`struct msgbuf {
+      <CodeBlock filename="msgbuf.h" code={`struct msgbuf {
     long mtype;     /* tipo del mensaje, debe ser > 0 */
     char mtext[N];  /* cuerpo del mensaje, tamano N */
-};`}
-      </CodeBlock>
+};`} />
       <DocNote>
         La estructura no es fija: el programador define{" "}
         <code>mtext[N]</code> al tamaño que necesite y pasa{" "}
@@ -205,14 +201,10 @@ ssize_t msgrcv(int msqid, void *msgp, size_t msgsz,
         <InlineCode>r</InlineCode>. La llave se obtiene de la ruta del propio
         ejecutable, de modo que ambos procesos comparten el mismo identificador.
       </DocP>
-      <CodeBlock filename="mcola.c" lang="c">
-        {mcolaC}
-      </CodeBlock>
+      <CodeBlock filename="mcola.c" lang="c" code={mcolaC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
       <DocP>
         El primer <InlineCode>./mcola r</InlineCode> consume el mensaje
         depositado por <InlineCode>./mcola s</InlineCode>. El segundo{" "}

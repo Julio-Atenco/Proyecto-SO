@@ -137,14 +137,10 @@ void  exit (int status);   /* hace limpieza y luego llama a _exit */`} />
         El hijo termina con un código arbitrario (7) y el padre lo recupera
         mediante <InlineCode>WEXITSTATUS</InlineCode>:
       </DocP>
-      <CodeBlock filename="exit_demo.c" lang="c">
-        {exitC}
-      </CodeBlock>
+      <CodeBlock filename="exit_demo.c" lang="c" code={exitC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH2 id="reflexion">Reflexión</DocH2>
       <DocP>

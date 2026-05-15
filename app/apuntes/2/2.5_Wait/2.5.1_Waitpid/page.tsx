@@ -186,14 +186,10 @@ export default function Page() {
         calcular su factorial, y el padre espera a todos con{" "}
         <InlineCode>waitpid(-1, ..., 0)</InlineCode>:
       </DocP>
-      <CodeBlock filename="waitpid_demo.c" lang="c">
-        {waitpidC}
-      </CodeBlock>
+      <CodeBlock filename="waitpid_demo.c" lang="c" code={waitpidC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH2 id="reflexion">Reflexión</DocH2>
       <DocP>

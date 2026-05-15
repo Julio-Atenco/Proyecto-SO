@@ -161,14 +161,10 @@ pid_t waitpid (pid_t pid, int *wstatus, int options);`} />
       </DocUl>
 
       <DocH2 id="codigo">Código de ejemplo</DocH2>
-      <CodeBlock filename="wait_demo.c" lang="c">
-        {waitC}
-      </CodeBlock>
+      <CodeBlock filename="wait_demo.c" lang="c" code={waitC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
       <DocP>
         El padre se bloquea en <InlineCode>wait()</InlineCode> y solo imprime
         su mensaje <em>después</em> de que el hijo terminó. Por eso el orden

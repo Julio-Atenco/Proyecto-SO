@@ -93,9 +93,7 @@ export default function Page() {
         los tres tipos de IPC: colas de mensajes, segmentos de memoria
         compartida y arreglos de semáforos.
       </DocP>
-      <CodeBlock filename="ipcs (sin argumentos)" lang="bash">
-        {salidaIpcs}
-      </CodeBlock>
+      <CodeBlock filename="ipcs (sin argumentos)" lang="bash" code={salidaIpcs} />
       <DocH3 id="opciones">Opciones útiles</DocH3>
       <DocUl>
         <DocLi>
@@ -135,11 +133,9 @@ export default function Page() {
         <InlineCode>ipcrm</InlineCode> elimina un objeto IPC dado su
         identificador:
       </DocP>
-      <CodeBlock filename="ipcrm" lang="bash">
-{`ipcrm -q <msqid>   # elimina una cola de mensajes
+      <CodeBlock filename="ipcrm" lang="bash" code={`ipcrm -q <msqid>   # elimina una cola de mensajes
 ipcrm -m <shmid>   # elimina un segmento de memoria compartida
-ipcrm -s <semid>   # elimina un arreglo de semaforos`}
-      </CodeBlock>
+ipcrm -s <semid>   # elimina un arreglo de semaforos`} />
       <DocWarning>
         Solo el propietario del recurso (o <code>root</code>) puede
         eliminarlo. Si se elimina una cola o un segmento mientras está siendo
@@ -152,9 +148,7 @@ ipcrm -s <semid>   # elimina un arreglo de semaforos`}
         virtual <InlineCode>/proc/sysvipc/</InlineCode>, en tres archivos de
         solo lectura:
       </DocP>
-      <CodeBlock filename="/proc/sysvipc" lang="bash">
-        {lsProcSysvipc}
-      </CodeBlock>
+      <CodeBlock filename="/proc/sysvipc" lang="bash" code={lsProcSysvipc} />
       <DocUl>
         <DocLi>
           <span>
@@ -180,9 +174,7 @@ ipcrm -s <semid>   # elimina un arreglo de semaforos`}
         se consulta el detalle con tiempos y finalmente se elimina con{" "}
         <InlineCode>ipcrm</InlineCode>.
       </DocP>
-      <CodeBlock filename="sesion" lang="bash">
-        {salidaSesion}
-      </CodeBlock>
+      <CodeBlock filename="sesion" lang="bash" code={salidaSesion} />
 
       <DocNote>
         Una buena práctica al desarrollar programas con objetos System V es

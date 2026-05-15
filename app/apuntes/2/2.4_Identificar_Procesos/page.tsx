@@ -138,14 +138,10 @@ pid_t setsid (void);   /* hace al proceso lider de nuevo grupo  */`} />
       </DocP>
 
       <DocH2 id="codigo">Código de ejemplo</DocH2>
-      <CodeBlock filename="identifica.c" lang="c">
-        {identC}
-      </CodeBlock>
+      <CodeBlock filename="identifica.c" lang="c" code={identC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
       <DocP>
         Observe que el PPID del hijo (674) coincide con el PID del padre, y
         que el PPID del padre (661) corresponde al shell desde el que se

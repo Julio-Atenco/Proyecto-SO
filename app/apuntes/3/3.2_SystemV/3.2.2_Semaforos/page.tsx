@@ -198,14 +198,10 @@ int semop (int semid, struct sembuf *sops, size_t nsops);`} />
         <InlineCode>P()</InlineCode>; el padre espera un segundo y libera con{" "}
         <InlineCode>V()</InlineCode>.
       </DocP>
-      <CodeBlock filename="semaforo.c" lang="c">
-        {semaforoC}
-      </CodeBlock>
+      <CodeBlock filename="semaforo.c" lang="c" code={semaforoC} />
 
       <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash">
-        {salida}
-      </CodeBlock>
+      <CodeBlock filename="salida" lang="bash" code={salida} />
 
       <DocH3 id="traza">Lectura de la traza</DocH3>
       <DocUl>
