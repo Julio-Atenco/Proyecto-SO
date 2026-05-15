@@ -160,7 +160,7 @@ export default function SidebarNav() {
       {/* Footer */}
       <div className="border-t border-border px-4 py-3 space-y-2 shrink-0">
         <a
-          href="https://mixteco.utm.mx/~gcgero/"
+          href="https://mixteco.utm.mx/~gcgero/cursos/Un_vistazo_a_los_Sistemas_Operativos.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-[12px] text-muted hover:text-primary transition-colors"
@@ -168,15 +168,7 @@ export default function SidebarNav() {
           <GraduationCap size={14} />
           Notas del profesor
         </a>
-        <a
-          href="https://github.com/Julio-Atenco"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-[12px] text-muted hover:text-primary transition-colors"
-        >
-          <Code2 size={14} />
-          GitHub
-        </a>
+        
       </div>
     </aside>
   );

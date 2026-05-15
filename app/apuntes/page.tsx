@@ -79,7 +79,6 @@ export default function HomePage() {
         >
           Julio Cesar Atenco Aguilar
         </a>
-        <p>Los repositorios están abiertos en GitHub para contribuciones y correcciones.</p>
       </DocP>
 
       {/* Módulo 1 */}
