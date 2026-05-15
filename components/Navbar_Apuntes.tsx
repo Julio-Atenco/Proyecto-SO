@@ -38,6 +38,7 @@ const sections = [
     id: "ipc",
     title: "3. Mecanismos IPC",
     items: [
+      { href: "/apuntes/3",                             label: "Mecanismos IPC" },
       { href: "/apuntes/3/3.1_Tuberias",                label: "Tuberías" },
       { href: "/apuntes/3/3.1_Tuberias/3.1.1_Pipe",     label: "pipe — sin nombre", indent: true },
       { href: "/apuntes/3/3.1_Tuberias/3.1.2_Fifo",     label: "fifo — con nombre", indent: true },
