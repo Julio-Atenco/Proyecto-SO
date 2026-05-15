@@ -71,7 +71,7 @@ export default function Home() {
         <div className="max-w-2xl animate-fade-up-1">
           <div className="font-mono text-xs text-muted mb-4 flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse" />
-            UTM · Ingeniería en Sistemas · 2024–2025
+            UTM · Ingeniería en Computación
           </div>
           <h1 className="text-4xl md:text-5xl font-bold text-text-base leading-tight mb-5">
             Apuntes y Programas de
@@ -124,16 +124,7 @@ export default function Home() {
           <Stat icon="article"  color="primary"   value="12" label="Apuntes" />
           <Stat icon="terminal" color="secondary" value="8"  label="Programas" />
           <Stat icon="book"     color="tertiary"  value="40+" label="Términos en el glosario" />
-          <a
-            href="https://mixteco.utm.mx/~gcgero/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-text-dim hover:text-primary transition-colors ml-auto text-sm"
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>school</span>
-            Página del profesor
-            <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
-          </a>
+          
         </div>
       </div>
 
@@ -144,9 +135,8 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-text-base">Apuntes Recientes</h2>
             <p className="text-text-dim mt-1 text-sm">Últimas notas y prácticas de la materia.</p>
           </div>
-          <Link href="/apuntes" className="text-primary text-sm hover:underline flex items-center gap-1">
+          <Link href="/apuntes" className="text-primary text-sm hover:underline flex items-center gap-1"  style={{ fontSize: 24 }}>
             Ver todos
-            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
           </Link>
         </div>
 
