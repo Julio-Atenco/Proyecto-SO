@@ -45,7 +45,7 @@ export default function DocPage({
         <nav className="font-mono text-xs text-muted mb-6 flex items-center gap-1.5 flex-wrap">
           <Link href="/" className="hover:text-primary transition-colors">Inicio</Link>
           <span className="material-symbols-outlined" style={{ fontSize: 13 }}>chevron_right</span>
-          <Link href="/docs/1_Introduccion_Sistema_Operativo" className="hover:text-primary transition-colors">Portafolio SO</Link>
+          <Link href="/apuntes" className="hover:text-primary transition-colors">Portafolio SO</Link>
           <span className="material-symbols-outlined" style={{ fontSize: 13 }}>chevron_right</span>
           <span className="text-primary">{section}</span>
         </nav>
