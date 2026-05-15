@@ -8,6 +8,7 @@ import {
   Lightbulb,
   AlertTriangle,
   Pencil,
+  Terminal,
 } from "lucide-react";
 
 /* ─── Tipos ─────────────────────────────────────────────── */
@@ -22,14 +23,10 @@ export interface NavLink {
 }
 
 interface DocPageProps {
-  /** Número de sección, e.g. "2.1" */
   section: string;
   title: string;
-  /** Etiqueta de categoría, e.g. "Procesos e Hilos" */
   category: string;
-  /** Tiempo estimado de lectura, e.g. "8 min" */
   readTime?: string;
-  /** Ítems del índice lateral */
   toc?: TocItem[];
   prev?: NavLink;
   next?: NavLink;
@@ -49,7 +46,6 @@ export default function DocPage({
 }: DocPageProps) {
   return (
     <div className="flex gap-0 min-h-full">
-      {/* Contenido del artículo */}
       <article className="flex-1 min-w-0 px-8 md:px-14 py-10">
         {/* Breadcrumb */}
         <nav className="font-mono text-xs text-muted mb-6 flex items-center gap-1.5 flex-wrap">
@@ -57,10 +53,7 @@ export default function DocPage({
             Inicio
           </Link>
           <ChevronRight size={13} className="shrink-0" />
-          <Link
-            href="/apuntes"
-            className="hover:text-primary transition-colors"
-          >
+          <Link href="/apuntes" className="hover:text-primary transition-colors">
             Portafolio SO
           </Link>
           <ChevronRight size={13} className="shrink-0" />
@@ -133,7 +126,7 @@ export default function DocPage({
         )}
       </article>
 
-      {/* TOC lateral (solo si hay ítems) */}
+      {/* TOC lateral */}
       {toc.length > 0 && (
         <aside className="hidden xl:block w-52 shrink-0 py-10 pr-6">
           <div className="sticky top-8">
@@ -170,54 +163,31 @@ export default function DocPage({
   );
 }
 
-/* ─── Sub-componentes de tipografía doc ─────────────────── */
+/* ─── Sub-componentes ───────────────────────────────────── */
+/* Todos idénticos a tu versión — solo CodeBlock fue modificado */
 
-export function DocH2({
-  id,
-  children,
-}: {
-  id: string;
-  children: React.ReactNode;
-}) {
+export function DocH2({ id, children }: { id: string; children: React.ReactNode }) {
   return (
-    <h2
-      id={id}
-      className="scroll-mt-6 text-xl font-bold text-primary mt-10 mb-4 flex items-center gap-2"
-    >
+    <h2 id={id} className="scroll-mt-6 text-xl font-bold text-primary mt-10 mb-4 flex items-center gap-2">
       {children}
     </h2>
   );
 }
 
-export function DocH3({
-  id,
-  children,
-}: {
-  id?: string;
-  children: React.ReactNode;
-}) {
+export function DocH3({ id, children }: { id?: string; children: React.ReactNode }) {
   return (
-    <h3
-      id={id}
-      className="scroll-mt-6 text-base font-semibold text-text-base mt-6 mb-3"
-    >
+    <h3 id={id} className="scroll-mt-6 text-base font-semibold text-text-base mt-6 mb-3">
       {children}
     </h3>
   );
 }
 
 export function DocP({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="text-text-dim text-sm leading-relaxed mb-4">{children}</p>
-  );
+  return <p className="text-text-dim text-sm leading-relaxed mb-4">{children}</p>;
 }
 
 export function DocUl({ children }: { children: React.ReactNode }) {
-  return (
-    <ul className="space-y-1.5 mb-4 pl-4 border-l-2 border-border">
-      {children}
-    </ul>
-  );
+  return <ul className="space-y-1.5 mb-4 pl-4 border-l-2 border-border">{children}</ul>;
 }
 
 export function DocLi({ children }: { children: React.ReactNode }) {
@@ -247,28 +217,55 @@ export function DocWarning({ children }: { children: React.ReactNode }) {
   );
 }
 
+/* ─── CodeBlock — único cambio respecto a tu versión ───── */
+/* Se añadió: prop `code` (reemplaza `children`),           */
+/*            prop `output` (salida esperada, opcional),    */
+/*            prop `outputNote` (nota aclaratoria, opc.)    */
 export function CodeBlock({
   filename,
   lang = "c",
-  children,
+  code,
+  output,
+  outputNote,
 }: {
   filename: string;
   lang?: string;
-  children: string;
+  code: string;
+  output?: string;
+  outputNote?: string;
 }) {
   return (
     <div className="rounded-lg overflow-hidden border border-border my-6">
+      {/* Cabecera */}
       <div className="bg-surf-high px-4 py-2 border-b border-border flex items-center justify-between">
         <span className="font-mono text-xs text-muted">{filename}</span>
-        <span className="font-mono text-[10px] text-muted uppercase">
-          {lang}
-        </span>
+        <span className="font-mono text-[10px] text-muted uppercase">{lang}</span>
       </div>
+
+      {/* Código fuente */}
       <pre className="p-5 bg-surf-low overflow-x-auto">
-        <code className="font-mono text-xs text-secondary leading-relaxed">
-          {children}
-        </code>
+        <code className="font-mono text-xs text-secondary leading-relaxed">{code}</code>
       </pre>
+
+      {/* Salida esperada — solo si se pasa el prop output */}
+      {output && (
+        <>
+          <div className="bg-surf-high px-4 py-2 border-t border-border flex items-center gap-2">
+            <Terminal size={14} className="text-tertiary shrink-0" />
+            <span className="font-mono text-[10px] text-tertiary uppercase tracking-wider">
+              Salida esperada
+            </span>
+            {outputNote && (
+              <span className="font-mono text-[10px] text-muted ml-auto italic">
+                {outputNote}
+              </span>
+            )}
+          </div>
+          <pre className="p-4 bg-bg overflow-x-auto">
+            <code className="font-mono text-xs text-tertiary/90 leading-relaxed">{output}</code>
+          </pre>
+        </>
+      )}
     </div>
   );
 }
