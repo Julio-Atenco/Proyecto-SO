@@ -3,8 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import {
+  ChevronRight,
+  CornerDownRight,
+  GraduationCap,
+  Code2,
+} from "lucide-react";
 
-/* ─── Estructura — rutas corregidas a /apuntes/... ─────── */
+/* ─── Estructura ────────────────────────────────────────── */
 const sections = [
   {
     id: "intro",
@@ -20,11 +26,11 @@ const sections = [
       { href: "/apuntes/2/2.1_Introduccion_Procesos", label: "Introducción a procesos" },
       { href: "/apuntes/2/2.2_Crear_Procesos",        label: "Crear procesos" },
       { href: "/apuntes/2/2.4_Identificar_Procesos",  label: "Identificar procesos" },
-      { href: "/apuntes/2/2.5_Wait",                   label: "wait()" },
+      { href: "/apuntes/2/2.5_Wait",                  label: "wait()" },
       { href: "/apuntes/2/2.5_Wait/2.5.1_Waitpid",    label: "waitpid()", indent: true },
-      { href: "/apuntes/2/2.6_Exit_y__Exit",           label: "_exit() y exit()" },
-      { href: "/apuntes/2/2.7_Estado_Zombi",           label: "Estado Zombi" },
-      { href: "/apuntes/2/2.8_Hilos",                  label: "Hilos" },
+      { href: "/apuntes/2/2.6_Exit_y__Exit",          label: "_exit() y exit()" },
+      { href: "/apuntes/2/2.7_Estado_Zombi",          label: "Estado Zombi" },
+      { href: "/apuntes/2/2.8_Hilos",                 label: "Hilos" },
       { href: "/apuntes/2/2.8_Hilos/2.8.2_Creacion_Hilos", label: "Creación de hilos", indent: true },
     ],
   },
@@ -32,15 +38,15 @@ const sections = [
     id: "ipc",
     title: "3. Mecanismos IPC",
     items: [
-      { href: "/apuntes/3/3.1_Tuberias",                      label: "Tuberías" },
-      { href: "/apuntes/3/3.1_Tuberias/3.1.1_Pipe",           label: "pipe — sin nombre",  indent: true },
-      { href: "/apuntes/3/3.1_Tuberias/3.1.2_Fifo",           label: "fifo — con nombre",  indent: true },
-      { href: "/apuntes/3/3.2_SystemV",                        label: "IPC System V" },
-      { href: "/apuntes/3/3.2_SystemV/3.2.1_Llaves",          label: "Llaves",             indent: true },
-      { href: "/apuntes/3/3.2_SystemV/3.2.2_Semaforos",       label: "Semáforos",          indent: true },
-      { href: "/apuntes/3/3.3_Memoria_Compartida",             label: "Memoria compartida" },
-      { href: "/apuntes/3/3.4_Cola_Mensajes",                  label: "Cola de mensajes" },
-      { href: "/apuntes/3/3.5_Comandos_IPC",                   label: "Comandos IPC" },
+      { href: "/apuntes/3/3.1_Tuberias",                label: "Tuberías" },
+      { href: "/apuntes/3/3.1_Tuberias/3.1.1_Pipe",     label: "pipe — sin nombre", indent: true },
+      { href: "/apuntes/3/3.1_Tuberias/3.1.2_Fifo",     label: "fifo — con nombre", indent: true },
+      { href: "/apuntes/3/3.2_SystemV",                 label: "IPC System V" },
+      { href: "/apuntes/3/3.2_SystemV/3.2.1_Llaves",    label: "Llaves",            indent: true },
+      { href: "/apuntes/3/3.2_SystemV/3.2.2_Semaforos", label: "Semáforos",         indent: true },
+      { href: "/apuntes/3/3.3_Memoria_Compartida",      label: "Memoria compartida" },
+      { href: "/apuntes/3/3.4_Cola_Mensajes",           label: "Cola de mensajes" },
+      { href: "/apuntes/3/3.5_Comandos_IPC",            label: "Comandos IPC" },
     ],
   },
 ];
@@ -81,7 +87,9 @@ export default function SidebarNav() {
             <div key={section.id}>
               {/* Encabezado colapsable */}
               <button
+                type="button"
                 onClick={() => toggle(section.id)}
+                aria-expanded={isOpen}
                 className={`w-full flex items-center justify-between px-2 py-1.5 rounded text-left transition-colors group ${
                   sectionActive ? "bg-primary-c/10" : "hover:bg-surf-high"
                 }`}
@@ -95,14 +103,12 @@ export default function SidebarNav() {
                 >
                   {section.title}
                 </span>
-                <span
-                  className={`material-symbols-outlined text-muted transition-transform duration-200 ${
+                <ChevronRight
+                  size={14}
+                  className={`text-muted shrink-0 transition-transform duration-200 ${
                     isOpen ? "rotate-90" : ""
                   }`}
-                  style={{ fontSize: 14 }}
-                >
-                  chevron_right
-                </span>
+                />
               </button>
 
               {/* Items */}
@@ -132,14 +138,12 @@ export default function SidebarNav() {
                             }`}
                           >
                             {indent && (
-                              <span
-                                className="material-symbols-outlined text-muted shrink-0"
-                                style={{ fontSize: 12 }}
-                              >
-                                subdirectory_arrow_right
-                              </span>
+                              <CornerDownRight
+                                size={12}
+                                className="text-muted shrink-0"
+                              />
                             )}
-                            {label}
+                            <span className="truncate">{label}</span>
                           </Link>
                         </li>
                       );
@@ -160,9 +164,7 @@ export default function SidebarNav() {
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-[12px] text-muted hover:text-primary transition-colors"
         >
-          <span className="material-symbols-outlined" style={{ fontSize: 14 }}>
-            school
-          </span>
+          <GraduationCap size={14} />
           Notas del profesor
         </a>
         <a
@@ -171,9 +173,7 @@ export default function SidebarNav() {
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-[12px] text-muted hover:text-primary transition-colors"
         >
-          <span className="material-symbols-outlined" style={{ fontSize: 14 }}>
-            code
-          </span>
+          <Code2 size={14} />
           GitHub
         </a>
       </div>
