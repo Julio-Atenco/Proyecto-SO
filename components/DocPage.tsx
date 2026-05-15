@@ -1,4 +1,14 @@
 import Link from "next/link";
+import {
+  ChevronRight,
+  Clock,
+  GraduationCap,
+  ArrowLeft,
+  ArrowRight,
+  Lightbulb,
+  AlertTriangle,
+  Pencil,
+} from "lucide-react";
 
 /* ─── Tipos ─────────────────────────────────────────────── */
 export interface TocItem {
@@ -43,10 +53,17 @@ export default function DocPage({
       <article className="flex-1 min-w-0 px-8 md:px-14 py-10">
         {/* Breadcrumb */}
         <nav className="font-mono text-xs text-muted mb-6 flex items-center gap-1.5 flex-wrap">
-          <Link href="/" className="hover:text-primary transition-colors">Inicio</Link>
-          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>chevron_right</span>
-          <Link href="/apuntes" className="hover:text-primary transition-colors">Portafolio SO</Link>
-          <span className="material-symbols-outlined" style={{ fontSize: 13 }}>chevron_right</span>
+          <Link href="/" className="hover:text-primary transition-colors">
+            Inicio
+          </Link>
+          <ChevronRight size={13} className="shrink-0" />
+          <Link
+            href="/apuntes"
+            className="hover:text-primary transition-colors"
+          >
+            Portafolio SO
+          </Link>
+          <ChevronRight size={13} className="shrink-0" />
           <span className="text-primary">{section}</span>
         </nav>
 
@@ -65,11 +82,11 @@ export default function DocPage({
           </h1>
           <div className="flex items-center gap-5 text-xs font-mono text-muted">
             <span className="flex items-center gap-1">
-              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>schedule</span>
+              <Clock size={14} />
               {readTime} de lectura
             </span>
             <span className="flex items-center gap-1">
-              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>school</span>
+              <GraduationCap size={14} />
               Sistemas Operativos — UTM
             </span>
           </div>
@@ -87,14 +104,16 @@ export default function DocPage({
                 className="group flex flex-col bg-surf-low border border-border rounded-lg p-4 hover:border-primary transition-colors"
               >
                 <span className="font-mono text-[11px] text-muted flex items-center gap-1 mb-1">
-                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>arrow_back</span>
+                  <ArrowLeft size={14} />
                   Anterior
                 </span>
                 <span className="text-sm font-medium text-text-base group-hover:text-primary transition-colors">
                   {prev.label}
                 </span>
               </Link>
-            ) : <div />}
+            ) : (
+              <div />
+            )}
 
             {next && (
               <Link
@@ -103,7 +122,7 @@ export default function DocPage({
               >
                 <span className="font-mono text-[11px] text-muted flex items-center gap-1 mb-1 sm:justify-end">
                   Siguiente
-                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>arrow_forward</span>
+                  <ArrowRight size={14} />
                 </span>
                 <span className="text-sm font-medium text-text-base group-hover:text-primary transition-colors">
                   {next.label}
@@ -140,7 +159,7 @@ export default function DocPage({
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 text-primary hover:underline text-xs"
               >
-                <span className="material-symbols-outlined" style={{ fontSize: 15 }}>edit</span>
+                <Pencil size={15} />
                 Editar en GitHub
               </a>
             </div>
@@ -153,24 +172,44 @@ export default function DocPage({
 
 /* ─── Sub-componentes de tipografía doc ─────────────────── */
 
-export function DocH2({ id, children }: { id: string; children: React.ReactNode }) {
+export function DocH2({
+  id,
+  children,
+}: {
+  id: string;
+  children: React.ReactNode;
+}) {
   return (
-    <h2 id={id} className="scroll-mt-6 text-xl font-bold text-primary mt-10 mb-4 flex items-center gap-2">
+    <h2
+      id={id}
+      className="scroll-mt-6 text-xl font-bold text-primary mt-10 mb-4 flex items-center gap-2"
+    >
       {children}
     </h2>
   );
 }
 
-export function DocH3({ id, children }: { id?: string; children: React.ReactNode }) {
+export function DocH3({
+  id,
+  children,
+}: {
+  id?: string;
+  children: React.ReactNode;
+}) {
   return (
-    <h3 id={id} className="scroll-mt-6 text-base font-semibold text-text-base mt-6 mb-3">
+    <h3
+      id={id}
+      className="scroll-mt-6 text-base font-semibold text-text-base mt-6 mb-3"
+    >
       {children}
     </h3>
   );
 }
 
 export function DocP({ children }: { children: React.ReactNode }) {
-  return <p className="text-text-dim text-sm leading-relaxed mb-4">{children}</p>;
+  return (
+    <p className="text-text-dim text-sm leading-relaxed mb-4">{children}</p>
+  );
 }
 
 export function DocUl({ children }: { children: React.ReactNode }) {
@@ -193,9 +232,7 @@ export function DocLi({ children }: { children: React.ReactNode }) {
 export function DocNote({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-surf-mid border border-secondary/30 rounded-lg p-5 my-6 flex items-start gap-3">
-      <span className="material-symbols-outlined text-secondary shrink-0" style={{ fontSize: 20 }}>
-        tips_and_updates
-      </span>
+      <Lightbulb size={20} className="text-secondary shrink-0 mt-0.5" />
       <p className="text-text-dim text-sm leading-relaxed">{children}</p>
     </div>
   );
@@ -204,23 +241,33 @@ export function DocNote({ children }: { children: React.ReactNode }) {
 export function DocWarning({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-surf-mid border border-danger/30 rounded-lg p-5 my-6 flex items-start gap-3">
-      <span className="material-symbols-outlined text-danger shrink-0" style={{ fontSize: 20 }}>
-        warning
-      </span>
+      <AlertTriangle size={20} className="text-danger shrink-0 mt-0.5" />
       <p className="text-text-dim text-sm leading-relaxed">{children}</p>
     </div>
   );
 }
 
-export function CodeBlock({ filename, lang = "c", children }: { filename: string; lang?: string; children: string }) {
+export function CodeBlock({
+  filename,
+  lang = "c",
+  children,
+}: {
+  filename: string;
+  lang?: string;
+  children: string;
+}) {
   return (
     <div className="rounded-lg overflow-hidden border border-border my-6">
       <div className="bg-surf-high px-4 py-2 border-b border-border flex items-center justify-between">
         <span className="font-mono text-xs text-muted">{filename}</span>
-        <span className="font-mono text-[10px] text-muted uppercase">{lang}</span>
+        <span className="font-mono text-[10px] text-muted uppercase">
+          {lang}
+        </span>
       </div>
       <pre className="p-5 bg-surf-low overflow-x-auto">
-        <code className="font-mono text-xs text-secondary leading-relaxed">{children}</code>
+        <code className="font-mono text-xs text-secondary leading-relaxed">
+          {children}
+        </code>
       </pre>
     </div>
   );
