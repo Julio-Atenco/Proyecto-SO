@@ -1,105 +1,86 @@
 import DocPage, {
   DocH2,
-  DocH3,
   DocP,
-  DocUl,
-  DocLi,
   DocNote,
-  DocWarning,
 } from "@/components/DocPage";
 
 export const metadata = {
-  title: "5.4 Particiones Fijas | Portafolio SO",
+  title: "5.2 Administración sin Intercambio | Portafolio SO",
 };
 
 const toc = [
-  { id: "particiones-fijas", label: "Particiones fijas" },
-  { id: "colas-independientes", label: "Colas independientes" },
-  { id: "cola-unica", label: "Cola única" },
-  { id: "algoritmos", label: "Algoritmos de asignación" },
+  { id: "sin-intercambio", label: "Sin intercambio o paginación" },
+  { id: "multiprogramacion", label: "Modelos de multiprogramación" },
+  { id: "formula", label: "Fórmula de uso de CPU" },
 ];
 
 export default function Page() {
   return (
     <DocPage
-      section="5.4"
-      title="Multiprogramación con Particiones Fijas"
+      section="5.2 – 5.3"
+      title="Sin Intercambio y Modelos de Multiprogramación"
       category="Administración de Memoria"
-      prev={{ href: "/apuntes/5/5.2_Sin_Intercambio", label: "5.2 – 5.3 Sin Intercambio" }}
-      next={{ href: "/apuntes/5/5.5_Reasignacion_Proteccion", label: "5.5 Reasignación y Protección" }}
+      prev={{ href: "/apuntes/5/5.1_Introduccion_Memoria", label: "5.1 Introducción" }}
+      next={{ href: "/apuntes/5/5.4_Particiones_Fijas", label: "5.4 Particiones Fijas" }}
       toc={toc}
     >
-      <DocH2 id="particiones-fijas">Multiprogramación con particiones fijas</DocH2>
+      <DocH2 id="sin-intercambio">5.2 Administración sin intercambio o paginación</DocH2>
       <DocP>
-        Para alojar varios procesos en memoria simultáneamente, la forma más
-        sencilla es dividir la memoria en{" "}
-        <strong className="text-primary">n particiones</strong> de tamaños
-        potencialmente distintos. Cada partición puede contener exactamente un
-        proceso; el grado de multiprogramación queda limitado al número de
-        particiones.
+        Los sistemas de administración de la memoria se pueden clasificar en dos
+        tipos:
+      </DocP>
+      <DocP>
+        <strong className="text-primary">1. Con desplazamiento:</strong> los
+        procesos se trasladan durante la ejecución entre la memoria principal y
+        el disco (y viceversa).
+      </DocP>
+      <DocP>
+        <strong className="text-secondary">2. Sin desplazamiento:</strong> los
+        procesos permanecen en RAM durante toda su ejecución. El esquema más
+        sencillo es aquel en que sólo existe{" "}
+        <strong className="text-tertiary">un proceso en memoria</strong> en cada
+        instante, lo que implica un uso muy ineficiente de la CPU cuando ese
+        proceso espera operaciones de E/S.
       </DocP>
 
-      <DocH2 id="colas-independientes">Colas de entrada independientes</DocH2>
+      <DocH2 id="multiprogramacion">5.3 Modelos de multiprogramación</DocH2>
       <DocP>
-        En este esquema (Figura 5-1a) cada partición tiene su propia cola de
-        trabajos esperando. Las desventajas son evidentes:
+        El uso de la CPU puede mejorarse mediante la{" "}
+        <strong className="text-primary">multiprogramación</strong>: mantener
+        varios procesos en memoria simultáneamente para que, mientras uno
+        espera E/S, otro use la CPU. En teoría, si el proceso promedio hace
+        cálculos el 20% del tiempo y se tienen cinco procesos en memoria, la
+        CPU debería estar ocupada el 100% del tiempo. Sin embargo, ese modelo
+        es optimista porque supone que los cinco procesos no esperarán E/S al
+        mismo tiempo.
       </DocP>
-      <DocUl>
-        <DocLi>
-          Si la cola de una partición grande está vacía, esa memoria se
-          desperdicia aunque otras colas estén llenas.
-        </DocLi>
-        <DocLi>
-          Los trabajos pequeños no pueden aprovechar particiones grandes sin
-          desperdiciar espacio.
-        </DocLi>
-      </DocUl>
 
-      <DocH2 id="cola-unica">Cola única (Figura 5-1b)</DocH2>
+      <DocH2 id="formula">Fórmula de uso de CPU</DocH2>
       <DocP>
-        Una alternativa es mantener una{" "}
-        <strong className="text-secondary">sola cola global</strong>. Cada vez
-        que se libera una partición se carga el trabajo más cercano al frente de
-        la cola que se ajuste a ella. Estrategias posibles:
+        Un modelo probabilístico más realista: sea{" "}
+        <strong className="text-secondary">p</strong> la fracción del tiempo que
+        un proceso está en estado de espera de E/S. Si{" "}
+        <strong className="text-secondary">n</strong> procesos residen en
+        memoria simultáneamente, la probabilidad de que todos esperen E/S al
+        mismo tiempo (CPU inactiva) es{" "}
+        <strong className="text-tertiary">p&sup;n</strong>. El uso de la CPU
+        queda definido entonces como:
       </DocP>
-      <DocUl>
-        <DocLi>
-          <strong className="text-primary">Primer ajuste:</strong> cargar el
-          primer trabajo de la cola que quepa. Simple pero puede desperdiciar
-          particiones grandes con tareas pequeñas.
-        </DocLi>
-        <DocLi>
-          <strong className="text-secondary">Trabajo más grande:</strong> buscar
-          en toda la cola el trabajo más grande que quepa en la partición
-          liberada. Discrimina a los trabajos pequeños.
-        </DocLi>
-        <DocLi>
-          <strong className="text-tertiary">Partición pequeña reservada:</strong>{" "}
-          mantener siempre disponible una partición pequeña para que los trabajos
-          pequeños no queden indefinidamente postergados.
-        </DocLi>
-      </DocUl>
-
-      <DocH2 id="algoritmos">Evitar inanición (starvation)</DocH2>
+      <div className="my-4 rounded-lg border border-surf-high bg-surf-mid px-6 py-4 text-center font-mono text-lg text-primary">
+        CPU = 1 − p<sup>n</sup>
+      </div>
       <DocP>
-        Para evitar que los trabajos pequeños queden excluidos indefinidamente,
-        se puede aplicar la regla de{" "}
-        <strong className="text-tertiary">puntos de exclusión</strong>: un
-        trabajo elegible que sea excluido acumula un punto cada vez; cuando
-        llega a <em>k</em> puntos ya no puede ser excluido de nuevo, forzando
-        su ejecución.
+        Por ejemplo, si cada proceso está esperando E/S el 80% del tiempo
+        (p = 0.8) y hay 5 procesos en memoria (n = 5):
       </DocP>
-      <DocWarning>
-        Las particiones fijas provocan <strong>fragmentación interna</strong>:
-        si un proceso ocupa menos espacio que la partición asignada, el resto de
-        esa partición se desperdicia y no puede usarse para otro proceso. Este
-        problema se mitiga con particiones variables (ver sección 5.6).
-      </DocWarning>
+      <div className="my-4 rounded-lg border border-surf-high bg-surf-mid px-6 py-4 text-center font-mono text-base text-secondary">
+        CPU = 1 − 0.8⁵ = 1 − 0.328 ≈ <strong>67%</strong>
+      </div>
       <DocNote>
-        Las particiones fijas fueron utilizadas en sistemas IBM OS/MFT (Multiprogramming
-        with a Fixed number of Tasks). Hoy se usan técnicas más avanzadas como
-        paginación y segmentación, pero entender las particiones fijas es la base
-        conceptual para comprender sus limitaciones.
+        Cuantos más procesos residan en memoria, mayor será el aprovechamiento
+        de la CPU, pero cada proceso adicional aporta un incremento marginal
+        decreciente. Esto justifica la multiprogramación con un número razonable
+        de procesos.
       </DocNote>
     </DocPage>
   );
