@@ -94,7 +94,7 @@ if (pid == 0) {
         <div className="max-w-5xl mx-auto px-6 md:px-16 py-5 flex flex-wrap gap-8 text-sm">
           <Stat icon="article"  color="primary"   value="10" label="Apuntes" />
           <Stat icon="terminal" color="secondary" value="21" label="Programas" />
-          <Stat icon="book"     color="tertiary"  value="27" label="Términos en el glosario" />
+          <Stat icon="book"     color="tertiary"  value="52" label="Términos en el glosario" />
           <a
             href="https://mixteco.utm.mx/~gcgero/"
             target="_blank"
