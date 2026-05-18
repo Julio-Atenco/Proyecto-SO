@@ -32,7 +32,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-br from-primary-c/15 to-secondary/10" />
         <pre className="font-mono text-xs text-secondary/60 leading-relaxed relative select-none text-center">
 {`  ┌─────────────────────────────────────────┐
-  │         B I T Á C O R A  S O           │
+  │         B I T Á C O R A  S O            │
   │   Sistemas Operativos · Linux · C       │
   │   Procesos · IPC · Hilos · Memoria      │
   └─────────────────────────────────────────┘`}
@@ -46,7 +46,7 @@ export default function HomePage() {
         blog creado con la finalidad de enseñar el funcionamiento base de los
         temas fundamentales de la materia de{" "}
         <strong className="text-text-base">Sistemas Operativos</strong>,
-        orientado a estudiantes de Computación e Informática de la UTM.
+        orientado a estudiantes de Computación e Informática.
       </DocP>
       <DocP>
         Para un computólogo, entender las abstracciones del sistema operativo
