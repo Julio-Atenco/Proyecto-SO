@@ -1,322 +1,360 @@
-import type { Metadata } from "next";
-import DocPage, {
-  DocH2,
-  DocP,
-  DocUl,
-  DocLi,
-} from "@/components/DocPage";
+import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Inicio | BitácoraSO",
-  description: "Blog de Sistemas Operativos — UTM.",
-};
-
-const toc = [
-  { id: "presentacion", label: "Presentación" },
-  { id: "intro",        label: "1. Introducción" },
-  { id: "procesos",     label: "2. Procesos e Hilos" },
-  { id: "ipc",          label: "3. Mecanismos IPC" },
-  { id: "memoria",      label: "5. Administración de Memoria" },
-  { id: "archivos",     label: "6. Sistema de Archivos" },
-  { id: "senales",      label: "7. Señales" },
+/* ─── Temas reales del portafolio ───────────────────────── */
+const temas = [
+  { href: "/apuntes/1",                            label: "Introducción al SO",   icon: "computer",        accent: "primary"   },
+  { href: "/apuntes/2/2.1_Introduccion_Procesos",  label: "Procesos",             icon: "memory",          accent: "primary"   },
+  { href: "/apuntes/2/2.8_Hilos",                  label: "Hilos (pthreads)",     icon: "device_hub",      accent: "secondary" },
+  { href: "/apuntes/3/3.1_Tuberias",               label: "Tuberías IPC",         icon: "cable",           accent: "tertiary"  },
+  { href: "/apuntes/3/3.2_SystemV",                label: "Semáforos System V",   icon: "sync",            accent: "secondary" },
+  { href: "/apuntes/3/3.3_Memoria_Compartida",     label: "Memoria Compartida",   icon: "storage",         accent: "tertiary"  },
+  { href: "/apuntes/5/5.1_Introduccion_Memoria",   label: "Adm. de Memoria",      icon: "hardware",        accent: "primary"   },
+  { href: "/apuntes/5/5.9_Memoria_Virtual",        label: "Memoria Virtual",      icon: "layers",          accent: "secondary" },
+  { href: "/apuntes/6/6.1_Introduccion_SA",        label: "Sistema de Archivos",  icon: "folder_open",     accent: "tertiary"  },
+  { href: "/apuntes/6/6.3_Tipos_Archivos",         label: "Tipos de Archivos",    icon: "description",     accent: "primary"   },
+  { href: "/apuntes/7/7.1_Introduccion_Senales",   label: "Señales",              icon: "notifications",   accent: "secondary" },
+  { href: "/apuntes/7/7.3_Tratamiento_Senales",    label: "Tratamiento Señales",  icon: "settings_alert",  accent: "tertiary"  },
+  { href: "/programas",                            label: "Programas",            icon: "terminal",        accent: "secondary" },
+  { href: "/glosario",                             label: "Glosario SO",          icon: "book",            accent: "primary"   },
 ];
 
-export default function HomePage() {
+const accentText: Record<string, string> = {
+  primary:   "text-primary",
+  secondary: "text-secondary",
+  tertiary:  "text-tertiary",
+};
+const accentBorder: Record<string, string> = {
+  primary:   "hover:border-primary",
+  secondary: "hover:border-secondary",
+  tertiary:  "hover:border-tertiary",
+};
+const accentHoverText: Record<string, string> = {
+  primary:   "group-hover:text-primary",
+  secondary: "group-hover:text-secondary",
+  tertiary:  "group-hover:text-tertiary",
+};
+
+/* ─── Page ──────────────────────────────────────────────── */
+export default function Home() {
   return (
-    <DocPage
-      section="Inicio"
-      title="BitácoraSO — Sistemas Operativos"
-      category="UTM · Computación"
-      readTime="2 min"
-      toc={toc}
-    >
-      {/* Hero */}
-      <div className="w-full h-48 rounded-lg overflow-hidden mb-10 bg-surf-high border border-border flex items-center justify-center relative">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-c/15 to-secondary/10" />
-        <pre className="font-mono text-xs text-secondary/60 leading-relaxed relative select-none text-center">
-{`  ┌─────────────────────────────────────────┐
-  │         B I T Á C O R A  S O            │
-  │   Sistemas Operativos · Linux · C       │
-  │   Procesos · IPC · Hilos · Memoria      │
-  └─────────────────────────────────────────┘`}
-        </pre>
+    <>
+      {/* ── HERO ─────────────────────────────────────────── */}
+      <section className="grid-bg relative overflow-hidden px-6 md:px-16 py-20 md:py-28">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-c/5 via-transparent to-secondary/5 pointer-events-none" />
+
+        <div className="max-w-2xl animate-fade-up-1">
+          <div className="font-mono text-xs text-muted mb-4 flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-secondary animate-pulse" />
+            UTM · Ingeniería en Computación
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-text-base leading-tight mb-5">
+            Portafolio de
+            <br />
+            <span className="text-primary">Sistemas Operativos</span>
+          </h1>
+          <p className="text-text-dim text-lg leading-relaxed mb-8">
+            Apuntes y programas de los temas del portafolio: procesos e hilos,
+            mecanismos IPC, administración de memoria, sistema de archivos y señales.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/apuntes/1"
+              className="bg-primary-c text-bg font-semibold px-5 py-2.5 rounded text-sm hover:bg-primary transition-colors"
+            >
+              Ver apuntes
+            </Link>
+            <Link
+              href="/programas"
+              className="border border-border text-text-dim px-5 py-2.5 rounded text-sm hover:border-primary hover:text-primary transition-colors"
+            >
+              Ver programas
+            </Link>
+          </div>
+        </div>
+
+        {/* Snippet decorativo — fork() */}
+        <div className="absolute right-16 top-1/2 -translate-y-1/2 hidden xl:block animate-fade-up-2">
+          <div className="bg-surf-high border border-border rounded-lg shadow-2xl rotate-1 w-72">
+            <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-border">
+              <span className="w-2.5 h-2.5 rounded-full bg-danger" />
+              <span className="w-2.5 h-2.5 rounded-full bg-tertiary" />
+              <span className="w-2.5 h-2.5 rounded-full bg-secondary" />
+              <span className="font-mono text-[11px] text-muted ml-2">procesos.c</span>
+            </div>
+            <pre className="font-mono text-xs text-secondary leading-relaxed p-4">{`pid_t pid = fork();
+
+if (pid == 0) {
+  /* proceso hijo */
+  printf("Hijo PID=%d\\n",
+         getpid());
+} else {
+  /* proceso padre */
+  wait(NULL);
+}`}</pre>
+          </div>
+        </div>
+      </section>
+
+      {/* ── STATS BAR ────────────────────────────────────── */}
+      <div className="border-y border-border bg-surf-low">
+        <div className="max-w-5xl mx-auto px-6 md:px-16 py-5 flex flex-wrap gap-8 text-sm">
+          <Stat icon="article"  color="primary"   value="19" label="Apuntes" />
+          <Stat icon="terminal" color="secondary" value="10" label="Programas" />
+          <Stat icon="book"     color="tertiary"  value="45" label="Términos en el glosario" />
+          <a
+            href="https://mixteco.utm.mx/~gcgero/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-text-dim hover:text-primary transition-colors ml-auto text-sm"
+          >
+            <span className="material-symbols-outlined text-primary" style={{ fontSize: 18 }}>school</span>
+            Página del profesor
+            <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
+          </a>
+        </div>
       </div>
 
-      {/* Presentación */}
-      <DocH2 id="presentacion">Presentación</DocH2>
-      <DocP>
-        Bienvenido a <strong className="text-text-base">BitácoraSO</strong>, un
-        blog creado con la finalidad de enseñar el funcionamiento base de los
-        temas fundamentales de la materia de{" "}
-        <strong className="text-text-base">Sistemas Operativos</strong>,
-        orientado a estudiantes de Computación e Informática.
-      </DocP>
-      <DocP>
-        Para un computólogo, entender las abstracciones del sistema operativo
-        —procesos, hilos, memoria virtual, IPC, señales— no es opcional: es la
-        base sobre la que se construye todo el conocimiento en ciencias de la
-        computación. Este blog aborda esos conceptos con ejemplos de código en C
-        y explicaciones directas, sin rodeos.
-      </DocP>
+      {/* ── APUNTES RECIENTES ────────────────────────────── */}
+      <section className="max-w-6xl mx-auto px-6 md:px-16 py-14">
+        <div className="flex justify-between items-end mb-8">
+          <div>
+            <h2 className="text-2xl font-bold text-text-base">Apuntes Recientes</h2>
+            <p className="text-text-dim mt-1 text-sm">Temas de los capítulos 2, 3, 5, 6 y 7 de las notas.</p>
+          </div>
+          <Link
+            href="/apuntes/1"
+            className="text-primary text-sm hover:underline flex items-center gap-1"
+          >
+            Ver todos
+            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
+          </Link>
+        </div>
 
-      <blockquote className="bg-surf-mid border-l-4 border-primary rounded p-5 my-6 italic text-text-base text-sm leading-relaxed">
-        &ldquo;Entender el sistema operativo es entender la computadora misma.
-        Todo lo demás es software corriendo sobre sus abstracciones.&rdquo;
-      </blockquote>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-      <DocH2 id="Proyecto desarrollado por">Proyecto desarrollado por</DocH2>
-      <DocP>
-        <a
-          href="https://github.com/LGSC-German"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline font-medium"
-        >
-          Luis German Sanchez Cortez
-        </a>{" "}
-        y{" "}
-        <a
-          href="https://github.com/Julio-Atenco"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline font-medium"
-        >
-          Julio Cesar Atenco Aguilar
-        </a>
-      </DocP>
+          {/* ── Card destacada — fork() ── */}
+          <div className="md:col-span-2 group bg-surf-mid border border-border rounded-lg overflow-hidden hover:border-primary transition-all">
+            <div className="h-44 bg-surf-high overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-c/20 to-secondary/10 flex items-center justify-center">
+                <pre className="font-mono text-xs text-secondary/70 leading-relaxed select-none px-8">{`pid_t pid = fork();
 
-      {/* ── Módulo 1 ── */}
-      <DocH2 id="intro">1. Introducción</DocH2>
-      <DocUl>
-        <DocLi>
-          <a href="/apuntes/1" className="hover:text-primary transition-colors">
-            Sistema Operativo Linux
-          </a>
-        </DocLi>
-      </DocUl>
+if (pid == 0) {
+    x = 5;  /* hijo: copia independiente */
+    printf("Hijo PID=%ld, x=%d\\n",
+           (long)getpid(), x);
+} else {
+    x = 10; /* padre */
+    wait(NULL);
+}`}</pre>
+              </div>
+            </div>
+            <div className="p-6">
+              <div className="flex gap-2 mb-3">
+                <span className="bg-primary-c/15 text-primary text-xs px-2.5 py-0.5 rounded-full font-mono">Procesos</span>
+                <span className="bg-secondary/10 text-secondary text-xs px-2.5 py-0.5 rounded-full font-mono">fork()</span>
+              </div>
+              <h3 className="text-lg font-semibold text-text-base mb-2 group-hover:text-primary transition-colors">
+                Crear Procesos con fork()
+              </h3>
+              <p className="text-text-dim text-sm leading-relaxed mb-4">
+                Llamada al sistema fork(), copy-on-write, valor de retorno, atributos
+                heredados y ejemplos con cadena y abanico de procesos.
+              </p>
+              <Link
+                href="/apuntes/2/2.2_Crear_Procesos"
+                className="text-primary text-sm font-medium hover:underline flex items-center gap-1 w-fit"
+              >
+                Leer apunte
+                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>arrow_forward</span>
+              </Link>
+            </div>
+          </div>
 
-      {/* ── Módulo 2 ── */}
-      <DocH2 id="procesos">2. Procesos e Hilos</DocH2>
-      <DocUl>
-        <DocLi>
-          <a href="/apuntes/2/2.1_Introduccion_Procesos" className="hover:text-primary transition-colors">
-            2.1 Introducción a procesos
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/2/2.2_Crear_Procesos" className="hover:text-primary transition-colors">
-            2.2 Crear procesos
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/2/2.4_Identificar_Procesos" className="hover:text-primary transition-colors">
-            2.4 Identificar procesos
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/2/2.5_Wait" className="hover:text-primary transition-colors">
-            2.5 wait()
-          </a>
-        </DocLi>
-        <DocLi>
-          <span className="pl-4 flex items-center gap-2">
-            <span className="text-muted font-mono text-xs">└─</span>
-            <a href="/apuntes/2/2.5_Wait/2.5.1_Waitpid" className="hover:text-primary transition-colors">
-              2.5.1 waitpid()
-            </a>
-          </span>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/2/2.6_Exit_y__Exit" className="hover:text-primary transition-colors">
-            2.6 _exit() y exit()
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/2/2.7_Estado_Zombi" className="hover:text-primary transition-colors">
-            2.7 Estado Zombi
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/2/2.8_Hilos" className="hover:text-primary transition-colors">
-            2.8 Hilos
-          </a>
-        </DocLi>
-        <DocLi>
-          <span className="pl-4 flex items-center gap-2">
-            <span className="text-muted font-mono text-xs">└─</span>
-            <a href="/apuntes/2/2.8_Hilos/2.8.2_Creacion_Hilos" className="hover:text-primary transition-colors">
-              2.8.2 Creación de hilos
-            </a>
-          </span>
-        </DocLi>
-      </DocUl>
+          {/* ── Tarjetas laterales ── */}
+          <div className="flex flex-col gap-6">
+            {[
+              {
+                tag:    "Memoria",
+                accent: "primary",
+                href:   "/apuntes/5/5.9_Memoria_Virtual",
+                titulo: "Memoria Virtual",
+                desc:   "MMU, tabla de páginas, traducción de direcciones virtuales a físicas y swap en Linux.",
+                fecha:  "Jun 2025",
+              },
+              {
+                tag:    "Señales",
+                accent: "secondary",
+                href:   "/apuntes/7/7.2_Tipos_Senales",
+                titulo: "Tipos de Señales",
+                desc:   "Tabla completa de señales UNIX System V y Linux: SIGKILL, SIGINT, SIGUSR1 y más.",
+                fecha:  "Jun 2025",
+              },
+            ].map(({ tag, accent, href, titulo, desc, fecha }) => (
+              <Link
+                key={titulo}
+                href={href}
+                className={`group bg-surf-mid border border-border rounded-lg p-5 ${accentBorder[accent]} transition-all flex flex-col flex-1`}
+              >
+                <span className={`${accentText[accent]} bg-current/10 text-xs px-2.5 py-0.5 rounded-full font-mono w-fit mb-3`}>
+                  {tag}
+                </span>
+                <h3 className={`font-semibold text-text-base mb-2 ${accentHoverText[accent]} transition-colors`}>
+                  {titulo}
+                </h3>
+                <p className="text-text-dim text-xs leading-relaxed flex-1">{desc}</p>
+                <div className="border-t border-border mt-4 pt-3 flex justify-between items-center">
+                  <span className="font-mono text-[11px] text-muted">{fecha}</span>
+                  <span className={`material-symbols-outlined ${accentText[accent]}`} style={{ fontSize: 18 }}>
+                    arrow_forward
+                  </span>
+                </div>
+              </Link>
+            ))}
+          </div>
 
-      {/* ── Módulo 3 ── */}
-      <DocH2 id="ipc">3. Mecanismos IPC</DocH2>
-      <DocUl>
-        <DocLi>
-          <a href="/apuntes/3" className="hover:text-primary transition-colors">
-            Mecanismos IPC
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/3/3.1_Tuberias" className="hover:text-primary transition-colors">
-            3.1 Tuberías
-          </a>
-        </DocLi>
-        <DocLi>
-          <span className="pl-4 flex items-center gap-2">
-            <span className="text-muted font-mono text-xs">└─</span>
-            <a href="/apuntes/3/3.1_Tuberias/3.1.1_Pipe" className="hover:text-primary transition-colors">
-              3.1.1 pipe — sin nombre
-            </a>
-          </span>
-        </DocLi>
-        <DocLi>
-          <span className="pl-4 flex items-center gap-2">
-            <span className="text-muted font-mono text-xs">└─</span>
-            <a href="/apuntes/3/3.1_Tuberias/3.1.2_Fifo" className="hover:text-primary transition-colors">
-              3.1.2 fifo — con nombre
-            </a>
-          </span>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/3/3.2_SystemV" className="hover:text-primary transition-colors">
-            3.2 IPC System V
-          </a>
-        </DocLi>
-        <DocLi>
-          <span className="pl-4 flex items-center gap-2">
-            <span className="text-muted font-mono text-xs">└─</span>
-            <a href="/apuntes/3/3.2_SystemV/3.2.1_Llaves" className="hover:text-primary transition-colors">
-              3.2.1 Llaves
-            </a>
-          </span>
-        </DocLi>
-        <DocLi>
-          <span className="pl-4 flex items-center gap-2">
-            <span className="text-muted font-mono text-xs">└─</span>
-            <a href="/apuntes/3/3.2_SystemV/3.2.2_Semaforos" className="hover:text-primary transition-colors">
-              3.2.2 Semáforos
-            </a>
-          </span>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/3/3.3_Memoria_Compartida" className="hover:text-primary transition-colors">
-            3.3 Memoria compartida
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/3/3.4_Cola_Mensajes" className="hover:text-primary transition-colors">
-            3.4 Cola de mensajes
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/3/3.5_Comandos_IPC" className="hover:text-primary transition-colors">
-            3.5 Comandos IPC
-          </a>
-        </DocLi>
-      </DocUl>
+          {/* ── Tarjeta horizontal — Estado Zombi ── */}
+          <div className="md:col-span-3 flex flex-col md:flex-row group bg-surf-low border border-border rounded-lg overflow-hidden hover:border-danger transition-all">
+            <div className="md:w-48 bg-surf-high flex items-center justify-center p-8 shrink-0">
+              <span className="material-symbols-outlined text-5xl text-danger/40">skull</span>
+            </div>
+            <div className="p-6">
+              <span className="font-mono text-[11px] text-muted block mb-1">§ 2.7 — Procesos e Hilos</span>
+              <h3 className="font-semibold text-text-base mb-1 group-hover:text-danger transition-colors">
+                Estado Zombi — demostración práctica
+              </h3>
+              <p className="text-text-dim text-sm mb-3">
+                Qué ocurre cuando el padre no llama a{" "}
+                <code className="font-mono text-xs bg-surf-high text-secondary px-1 rounded">wait()</code>.
+                Cómo observarlo con{" "}
+                <code className="font-mono text-xs bg-surf-high text-secondary px-1 rounded">ps -el | grep Z</code>{" "}
+                y cómo evitarlo.
+              </p>
+              <Link
+                href="/apuntes/2/2.7_Estado_Zombi"
+                className="text-danger text-sm font-medium hover:underline flex items-center gap-1 w-fit"
+              >
+                Ver apunte
+                <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
+              </Link>
+            </div>
+          </div>
 
-      {/* ── Módulo 5 ── */}
-      <DocH2 id="memoria">5. Administración de Memoria</DocH2>
-      <DocUl>
-        <DocLi>
-          <a href="/apuntes/5/5.1_Introduccion_Memoria" className="hover:text-primary transition-colors">
-            5.1 Introducción
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.2_Sin_Intercambio" className="hover:text-primary transition-colors">
-            5.2 – 5.3 Sin Intercambio y Multiprogramación
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.4_Particiones_Fijas" className="hover:text-primary transition-colors">
-            5.4 Particiones Fijas
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.5_Reasignacion_Proteccion" className="hover:text-primary transition-colors">
-            5.5 Reasignación y Protección
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.6_Intercambio" className="hover:text-primary transition-colors">
-            5.6 Intercambio (Swap)
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.7_Mapas_Bits" className="hover:text-primary transition-colors">
-            5.7 Mapas de Bits
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.8_Listas_Ligadas" className="hover:text-primary transition-colors">
-            5.8 Listas Ligadas
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.9_Memoria_Virtual" className="hover:text-primary transition-colors">
-            5.9 Memoria Virtual
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/5/5.10_Funciones_Memoria" className="hover:text-primary transition-colors">
-            5.10 Funciones de Memoria
-          </a>
-        </DocLi>
-      </DocUl>
+          {/* ── Tarjeta horizontal — Memoria Virtual ── */}
+          <div className="md:col-span-3 flex flex-col md:flex-row group bg-surf-low border border-border rounded-lg overflow-hidden hover:border-secondary transition-all">
+            <div className="md:w-48 bg-surf-high flex items-center justify-center p-8 shrink-0">
+              <pre className="font-mono text-[10px] text-secondary/60 leading-relaxed select-none text-center">{`VA → MMU → FA
+0x0000
+  ↓
+[Tabla]
+  ↓
+0x2000`}</pre>
+            </div>
+            <div className="p-6">
+              <span className="font-mono text-[11px] text-muted block mb-1">§ 5.9 — Administración de Memoria</span>
+              <h3 className="font-semibold text-text-base mb-1 group-hover:text-secondary transition-colors">
+                Memoria Virtual y la MMU
+              </h3>
+              <p className="text-text-dim text-sm mb-3">
+                Cómo la{" "}
+                <code className="font-mono text-xs bg-surf-high text-secondary px-1 rounded">MMU</code>{" "}
+                traduce direcciones virtuales a físicas mediante tablas de páginas, y cómo Linux gestiona el{" "}
+                <code className="font-mono text-xs bg-surf-high text-secondary px-1 rounded">swappiness</code>{" "}
+                para decidir cuándo usar la swap.
+              </p>
+              <Link
+                href="/apuntes/5/5.9_Memoria_Virtual"
+                className="text-secondary text-sm font-medium hover:underline flex items-center gap-1 w-fit"
+              >
+                Ver apunte
+                <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
+              </Link>
+            </div>
+          </div>
 
-      {/* ── Módulo 6 ── */}
-      <DocH2 id="archivos">6. Sistema de Archivos</DocH2>
-      <DocUl>
-        <DocLi>
-          <a href="/apuntes/6/6.1_Introduccion_SA" className="hover:text-primary transition-colors">
-            6.1 Introducción al Sistema de Archivos
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/6/6.2_Estructura_Logica" className="hover:text-primary transition-colors">
-            6.2 Estructura Lógica
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/6/6.3_Tipos_Archivos" className="hover:text-primary transition-colors">
-            6.3 Tipos de Archivos en Linux
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/6/6.4_Dispositivos_ES" className="hover:text-primary transition-colors">
-            6.4 Dispositivos de E/S
-          </a>
-        </DocLi>
-      </DocUl>
+          {/* ── Tarjeta horizontal — Señales ── */}
+          <div className="md:col-span-3 flex flex-col md:flex-row group bg-surf-low border border-border rounded-lg overflow-hidden hover:border-tertiary transition-all">
+            <div className="md:w-48 bg-surf-high flex items-center justify-center p-8 shrink-0">
+              <pre className="font-mono text-[10px] text-tertiary/60 leading-relaxed select-none text-center">{`signal(SIGINT,
+  handler);
 
-      {/* ── Módulo 7 ── */}
-      <DocH2 id="senales">7. Señales</DocH2>
-      <DocUl>
-        <DocLi>
-          <a href="/apuntes/7/7.1_Introduccion_Senales" className="hover:text-primary transition-colors">
-            7.1 Introducción a las Señales
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/7/7.2_Tipos_Senales" className="hover:text-primary transition-colors">
-            7.2 Tipos de Señales
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/7/7.3_Tratamiento_Senales" className="hover:text-primary transition-colors">
-            7.3 Tratamiento de Señales
-          </a>
-        </DocLi>
-        <DocLi>
-          <a href="/apuntes/7/7.4_Alarma_Pausa" className="hover:text-primary transition-colors">
-            7.4 Alarma y Pausa
-          </a>
-        </DocLi>
-      </DocUl>
-    </DocPage>
+kill(pid, 9);
+alarm(5);`}</pre>
+            </div>
+            <div className="p-6">
+              <span className="font-mono text-[11px] text-muted block mb-1">§ 7 — Señales</span>
+              <h3 className="font-semibold text-text-base mb-1 group-hover:text-tertiary transition-colors">
+                Señales — interrupciones de software
+              </h3>
+              <p className="text-text-dim text-sm mb-3">
+                Cómo el kernel notifica eventos asíncronos a los procesos: tablas completas de UNIX y Linux,
+                función{" "}
+                <code className="font-mono text-xs bg-surf-high text-tertiary px-1 rounded">signal()</code>,{" "}
+                <code className="font-mono text-xs bg-surf-high text-tertiary px-1 rounded">kill()</code>,{" "}
+                <code className="font-mono text-xs bg-surf-high text-tertiary px-1 rounded">alarm()</code>{" "}
+                y saltos no locales con{" "}
+                <code className="font-mono text-xs bg-surf-high text-tertiary px-1 rounded">setjmp/longjmp</code>.
+              </p>
+              <Link
+                href="/apuntes/7/7.1_Introduccion_Senales"
+                className="text-tertiary text-sm font-medium hover:underline flex items-center gap-1 w-fit"
+              >
+                Ver apunte
+                <span className="material-symbols-outlined" style={{ fontSize: 14 }}>open_in_new</span>
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* ── TEMAS DE LA MATERIA ───────────────────────────── */}
+      <section className="border-t border-border bg-surf-low py-14">
+        <div className="max-w-6xl mx-auto px-6 md:px-16">
+          <h2 className="text-2xl font-bold text-text-base mb-2">Temas del Portafolio</h2>
+          <p className="text-text-dim text-sm mb-8">
+            Capítulos 1, 2, 3, 5, 6 y 7 de las notas del profesor.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {temas.map(({ href, label, icon, accent }) => (
+              <Link
+                key={label}
+                href={href}
+                className={`group bg-surf-mid border border-border rounded-lg p-4 ${accentBorder[accent]} transition-all text-center`}
+              >
+                <span className={`material-symbols-outlined text-2xl ${accentText[accent]} mb-2 block`}>
+                  {icon}
+                </span>
+                <span className={`text-sm font-medium text-text-base ${accentHoverText[accent]} transition-colors`}>
+                  {label}
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
+
+/* ─── Subcomponente Stat ─────────────────────────────────── */
+function Stat({
+  icon, color, value, label,
+}: {
+  icon: string; color: string; value: string; label: string;
+}) {
+  const accentText: Record<string, string> = {
+    primary:   "text-primary",
+    secondary: "text-secondary",
+    tertiary:  "text-tertiary",
+  };
+  return (
+    <div className="flex items-center gap-2 text-text-dim">
+      <span className={`material-symbols-outlined ${accentText[color]}`} style={{ fontSize: 18 }}>
+        {icon}
+      </span>
+      <span>
+        <span className="text-text-base font-semibold">{value}</span> {label}
+      </span>
+    </div>
   );
 }
