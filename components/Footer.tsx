@@ -11,7 +11,7 @@ const externalLinks = [
   { href: "https://www.utm.mx/web/",         label: "UTM", icon: "school" },
   { href: "https://mixteco.utm.mx/~gcgero/", label: "Página del Profesor", icon: "person" },
   { href: "https://github.com/Julio-Atenco", label: "GitHub Personal de Julio Atenco", icon: "code" },
-  { href: "https://github.com/LGSC-German", label: "GitHub Personal de German López", icon: "code" },
+  { href: "https://github.com/LGSC-German", label: "GitHub Personal de German Sanchez", icon: "code" },
 ];
 
 export default function Footer() {
