@@ -693,12 +693,12 @@ void MESG(char *opcion)
 export default function MiniShellPage() {
   return (
     <DocPage
-      section="3.6 — Mini-Shell"
+      section=" Mini-Shell"
       title="Mini-Shell en C con llamadas al sistema"
-      category="IPC / Sistema"
+      category="Practica de sistemas operativos"
       readTime="15 min"
       toc={toc}
-      prev={{ href: "/apuntes/3/3.5_Comandos_IPC", label: "Comandos IPC" }}
+      prev={{ href: "/", label: "Inicio" }}
       next={{ href: "/programas", label: "Programas" }}
     >
       {/* ─── CÓDIGO COMPLETO AL INICIO ────────────────────── */}
