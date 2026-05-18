@@ -1,160 +1,237 @@
 import DocPage, {
   DocH2,
+  DocH3,
   DocP,
-  DocUl,
-  DocLi,
   DocNote,
+  DocWarning,
+  CodeBlock,
+  InlineCode,
 } from "@/components/DocPage";
-import Link from "next/link";
 
 export const metadata = {
-  title: "3.2 Mecanismos IPC de System V — Portafolio SO",
+  title: "7.2 Tipos de Señales | Portafolio SO",
 };
 
 const toc = [
-  { id: "intro", label: "Introducción" },
-  { id: "tabla", label: "Resumen de llamadas IPC" },
-  { id: "subsecciones", label: "Subsecciones" },
+  { id: "senales-unix", label: "Señales UNIX System V" },
+  { id: "tabla-systemv", label: "Tabla de señales" },
+  { id: "senales-linux", label: "Señales en Linux" },
+  { id: "tabla-linux", label: "Tabla Linux" },
+  { id: "kill", label: "Función kill()" },
+  { id: "raise", label: "Función raise()" },
+];
+
+// Señales UNIX System V
+const senalesSystemV = [
+  { nombre: "SIGHUP",  num: "01", core: false, term: true,  ign: false, desc: "Desconexión de terminal o fin del líder del grupo" },
+  { nombre: "SIGINT",  num: "02", core: false, term: true,  ign: false, desc: "Interrupción (Ctrl+C)" },
+  { nombre: "SIGQUIT", num: "03", core: true,  term: true,  ign: false, desc: "Salir (Ctrl+\\), genera core" },
+  { nombre: "SIGILL",  num: "04", core: true,  term: true,  ign: false, desc: "Instrucción ilegal" },
+  { nombre: "SIGTRAP", num: "05", core: true,  term: true,  ign: false, desc: "Trace trap (depuración paso a paso)" },
+  { nombre: "SIGIOT",  num: "06", core: true,  term: true,  ign: false, desc: "Fallo de hardware I/O trap" },
+  { nombre: "SIGEMT",  num: "07", core: true,  term: true,  ign: false, desc: "Emulator trap instruction" },
+  { nombre: "SIGFPE",  num: "08", core: true,  term: true,  ign: false, desc: "Error aritmético de coma flotante" },
+  { nombre: "SIGKILL", num: "09", core: false, term: true,  ign: false, desc: "Terminación incondicional del proceso" },
+  { nombre: "SIGBUS",  num: "10", core: true,  term: true,  ign: false, desc: "Error de bus (dirección no existente o impar)" },
+  { nombre: "SIGSEGV", num: "11", core: true,  term: true,  ign: false, desc: "Violación de segmento" },
+  { nombre: "SIGSYS",  num: "12", core: true,  term: true,  ign: false, desc: "Argumento erróneo en syscall" },
+  { nombre: "SIGPIPE", num: "13", core: false, term: true,  ign: false, desc: "Escritura en pipe sin lector" },
+  { nombre: "SIGALRM", num: "14", core: false, term: true,  ign: false, desc: "Alarma de reloj (temporizador expirado)" },
+  { nombre: "SIGTERM", num: "15", core: false, term: true,  ign: false, desc: "Terminación de software (puede ignorarse)" },
+  { nombre: "SIGUSR1", num: "16", core: false, term: true,  ign: false, desc: "Señal de usuario 1 (reservada al programador)" },
+  { nombre: "SIGUSR2", num: "17", core: false, term: true,  ign: false, desc: "Señal de usuario 2 (reservada al programador)" },
+  { nombre: "SIGCLD",  num: "18", core: false, term: false, ign: true,  desc: "Muerte del proceso hijo (ignorada por defecto)" },
+  { nombre: "SIGPWR",  num: "19", core: false, term: false, ign: false, desc: "Fallo de alimentación" },
+];
+
+// Señales Linux adicionales relevantes
+const senalesLinux = [
+  { nombre: "SIGHUP",    num: "01", desc: "Termina el proceso líder" },
+  { nombre: "SIGINT",    num: "02", desc: "Ctrl+C pulsado" },
+  { nombre: "SIGQUIT",   num: "03", desc: "Ctrl+\\ pulsado, termina terminal" },
+  { nombre: "SIGILL",    num: "04", desc: "Instrucción ilegal" },
+  { nombre: "SIGTRAP",   num: "05", desc: "Trazado de programas" },
+  { nombre: "SIGABRT",   num: "06", desc: "Terminación anormal" },
+  { nombre: "SIGBUS",    num: "07", desc: "Error de bus" },
+  { nombre: "SIGFPE",    num: "08", desc: "Error aritmético, coma flotante" },
+  { nombre: "SIGKILL",   num: "09", desc: "Eliminar proceso incondicionalmente" },
+  { nombre: "SIGUSR1",   num: "10", desc: "Señal definida por el usuario" },
+  { nombre: "SIGSEGV",   num: "11", desc: "Violación de segmento" },
+  { nombre: "SIGUSR2",   num: "12", desc: "Señal definida por el usuario" },
+  { nombre: "SIGPIPE",   num: "13", desc: "Escritura en pipe sin lectores" },
+  { nombre: "SIGALRM",   num: "14", desc: "Fin del reloj ITIMER_REAL" },
+  { nombre: "SIGTERM",   num: "15", desc: "Señal de terminación del software" },
+  { nombre: "SIGCHLD",   num: "17", desc: "Avisa al padre que un hijo terminó" },
+  { nombre: "SIGCONT",   num: "18", desc: "Proceso llevado a segundo/primer plano" },
+  { nombre: "SIGSTOP",   num: "19", desc: "Suspensión de proceso (no se puede ignorar)" },
+  { nombre: "SIGTSTP",   num: "20", desc: "Suspensión por Ctrl+Z" },
+  { nombre: "SIGTTIN",   num: "21", desc: "Proceso en bg intenta leer de terminal" },
+  { nombre: "SIGTTOU",   num: "22", desc: "Proceso en bg intenta escribir en terminal" },
+  { nombre: "SIGXCPU",   num: "24", desc: "Límite de tiempo de CPU sobrepasado" },
+  { nombre: "SIGXFSZ",   num: "25", desc: "Tamaño máximo de archivo sobrepasado" },
+  { nombre: "SIGVTALRM", num: "26", desc: "Fin del temporizador ITIMER_VIRTUAL" },
+  { nombre: "SIGPROF",   num: "27", desc: "Fin del temporizador ITIMER_PROF" },
+  { nombre: "SIGWINCH",  num: "28", desc: "Cambio de tamaño de ventana (X11)" },
+  { nombre: "SIGIO",     num: "29", desc: "Datos disponibles para E/S" },
+  { nombre: "SIGPWR",    num: "30", desc: "Fallo de alimentación" },
+  { nombre: "SIGSYS",    num: "31", desc: "Error de argumento en syscall" },
+  { nombre: "SIGRTMIN",  num: "32", desc: "Inicio del rango de señales en tiempo real" },
 ];
 
 export default function Page() {
   return (
     <DocPage
-      section="3.2"
-      title="Mecanismos IPC derivados de System V"
-      category="IPC · System V"
-      readTime="5 min"
+      section="7.2"
+      title="Tipos de Señales"
+      category="Señales"
+      prev={{ href: "/apuntes/7/7.1_Introduccion_Senales", label: "7.1 Introducción" }}
+      next={{ href: "/apuntes/7/7.3_Tratamiento_Senales", label: "7.3 Tratamiento de Señales" }}
       toc={toc}
-      prev={{
-        href: "/apuntes/3/3.1_Tuberias/3.1.2_Fifo",
-        label: "3.1.2 Tuberías con nombre (FIFO)",
-      }}
-      next={{
-        href: "/apuntes/3/3.2_SystemV/3.2.1_Llaves",
-        label: "3.2.1 Llaves",
-      }}
     >
-      <DocH2 id="intro">Introducción</DocH2>
+      <DocH2 id="senales-unix">Señales UNIX System V</DocH2>
       <DocP>
-        El paquete de comunicación entre procesos de UNIX System V y derivados,
-        como GNU/Linux, se compone de <strong>tres</strong> mecanismos:
-      </DocP>
-      <DocUl>
-        <DocLi>
-          <span>
-            Los <strong>semáforos</strong>, que permiten sincronizar procesos.
-          </span>
-        </DocLi>
-        <DocLi>
-          <span>
-            La <strong>memoria compartida</strong>, que permite a los procesos
-            compartir su espacio de direcciones virtuales.
-          </span>
-        </DocLi>
-        <DocLi>
-          <span>
-            Las <strong>colas de mensajes</strong>, que posibilitan el
-            intercambio de datos con un formato determinado.
-          </span>
-        </DocLi>
-      </DocUl>
-      <DocP>
-        Estos mecanismos están implementados como una unidad y comparten
-        características comunes: una tabla con entradas que describen el uso
-        del mecanismo, una <strong>llave numérica</strong> elegida por el
-        usuario para cada entrada, una llamada <em>get</em> para crear o
-        recuperar una entrada, un registro de permisos por entrada y una
-        llamada de <em>control</em> para leer, modificar o liberar la entrada.
+        En UNIX System V hay 19 señales definidas. Cada señal tiene asociada
+        una acción por defecto que puede ser: generar un archivo{" "}
+        <strong className="text-tertiary">core</strong> (volcado de memoria),{" "}
+        <strong className="text-danger">terminar</strong> el proceso, o{" "}
+        <strong className="text-secondary">ignorarse</strong>.
       </DocP>
 
-      <DocH2 id="tabla">Resumen de llamadas IPC</DocH2>
-      <div className="overflow-x-auto my-6 border border-border rounded-lg">
-        <table className="w-full text-sm">
+      <DocH2 id="tabla-systemv">Tabla de señales UNIX System V</DocH2>
+      <div className="my-4 overflow-x-auto rounded-lg border border-surf-high text-sm">
+        <table className="w-full">
           <thead className="bg-surf-high">
             <tr>
-              <th className="text-left px-4 py-2 font-mono text-xs text-muted">
-                Operación
-              </th>
-              <th className="text-left px-4 py-2 font-mono text-xs text-primary">
-                Semáforos
-              </th>
-              <th className="text-left px-4 py-2 font-mono text-xs text-primary">
-                Memoria compartida
-              </th>
-              <th className="text-left px-4 py-2 font-mono text-xs text-primary">
-                Cola de mensajes
-              </th>
+              <th className="px-3 py-2 text-left text-secondary">Nombre</th>
+              <th className="px-3 py-2 text-center text-text-dim">Nº</th>
+              <th className="px-3 py-2 text-center text-tertiary">Core</th>
+              <th className="px-3 py-2 text-center text-danger">Term</th>
+              <th className="px-3 py-2 text-center text-text-dim">Ign</th>
+              <th className="px-3 py-2 text-left text-text-dim">Descripción</th>
             </tr>
           </thead>
-          <tbody className="text-text-dim">
-            <tr className="border-t border-border">
-              <td className="px-4 py-2">Cabecera común</td>
-              <td className="px-4 py-2 font-mono text-xs" colSpan={3}>
-                &lt;sys/types.h&gt;, &lt;sys/ipc.h&gt;
-              </td>
+          <tbody className="divide-y divide-surf-high">
+            {senalesSystemV.map((s, i) => (
+              <tr key={s.nombre} className={i % 2 === 0 ? "bg-surf-low" : "bg-surf-mid"}>
+                <td className="px-3 py-1.5 font-mono text-primary">{s.nombre}</td>
+                <td className="px-3 py-1.5 text-center font-mono text-text-dim">{s.num}</td>
+                <td className="px-3 py-1.5 text-center">{s.core ? <span className="text-tertiary">✓</span> : <span className="text-surf-high">—</span>}</td>
+                <td className="px-3 py-1.5 text-center">{s.term ? <span className="text-danger">✓</span> : <span className="text-surf-high">—</span>}</td>
+                <td className="px-3 py-1.5 text-center">{s.ign  ? <span className="text-secondary">✓</span> : <span className="text-surf-high">—</span>}</td>
+                <td className="px-3 py-1.5 text-text-dim">{s.desc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <DocWarning>
+        <strong>SIGKILL (9)</strong> y <strong>SIGSTOP (19)</strong> no pueden
+        ser ignoradas ni capturadas por el proceso. Son las únicas señales que
+        el kernel entrega de forma incondicional.
+      </DocWarning>
+
+      <DocH2 id="senales-linux">7.2.1 Señales en Linux</DocH2>
+      <DocP>
+        Linux extiende el conjunto de señales de UNIX. Las definiciones se
+        encuentran en{" "}
+        <InlineCode>/usr/include/asm-generic/signal.h</InlineCode>. Nótese que
+        algunos números difieren respecto a UNIX System V.
+      </DocP>
+
+      <DocH2 id="tabla-linux">Tabla de señales Linux</DocH2>
+      <div className="my-4 overflow-x-auto rounded-lg border border-surf-high text-sm">
+        <table className="w-full">
+          <thead className="bg-surf-high">
+            <tr>
+              <th className="px-3 py-2 text-left text-secondary">Nombre</th>
+              <th className="px-3 py-2 text-center text-text-dim">Nº</th>
+              <th className="px-3 py-2 text-left text-text-dim">Descripción</th>
             </tr>
-            <tr className="border-t border-border">
-              <td className="px-4 py-2">Cabecera específica</td>
-              <td className="px-4 py-2 font-mono text-xs">&lt;sys/sem.h&gt;</td>
-              <td className="px-4 py-2 font-mono text-xs">&lt;sys/shm.h&gt;</td>
-              <td className="px-4 py-2 font-mono text-xs">&lt;sys/msg.h&gt;</td>
-            </tr>
-            <tr className="border-t border-border">
-              <td className="px-4 py-2">Crear / abrir</td>
-              <td className="px-4 py-2 font-mono text-xs">semget</td>
-              <td className="px-4 py-2 font-mono text-xs">shmget</td>
-              <td className="px-4 py-2 font-mono text-xs">msgget</td>
-            </tr>
-            <tr className="border-t border-border">
-              <td className="px-4 py-2">Control</td>
-              <td className="px-4 py-2 font-mono text-xs">semctl</td>
-              <td className="px-4 py-2 font-mono text-xs">shmctl</td>
-              <td className="px-4 py-2 font-mono text-xs">msgctl</td>
-            </tr>
-            <tr className="border-t border-border">
-              <td className="px-4 py-2">Operación</td>
-              <td className="px-4 py-2 font-mono text-xs">semop</td>
-              <td className="px-4 py-2 font-mono text-xs">shmat, shmdt</td>
-              <td className="px-4 py-2 font-mono text-xs">msgsnd, msgrcv</td>
-            </tr>
+          </thead>
+          <tbody className="divide-y divide-surf-high">
+            {senalesLinux.map((s, i) => (
+              <tr key={s.nombre} className={i % 2 === 0 ? "bg-surf-low" : "bg-surf-mid"}>
+                <td className="px-3 py-1.5 font-mono text-primary">{s.nombre}</td>
+                <td className="px-3 py-1.5 text-center font-mono text-text-dim">{s.num}</td>
+                <td className="px-3 py-1.5 text-text-dim">{s.desc}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
-      <DocNote>
-        Todos los mecanismos System V identifican sus recursos mediante una{" "}
-        <strong>llave</strong> de tipo <code>key_t</code>, típicamente generada
-        con <code>ftok()</code>. Procesos distintos que conozcan la llave
-        pueden compartir el mismo recurso aunque no estén emparentados.
-      </DocNote>
+      <DocH2 id="kill">Función kill()</DocH2>
+      <DocP>
+        Para enviar una señal desde un proceso a otro (o a un grupo de
+        procesos) se usa la syscall <InlineCode>kill()</InlineCode>:
+      </DocP>
+      <CodeBlock
+        filename="prototipo_kill.c"
+        code={`#include <sys/types.h>
+#include <signal.h>
 
-      <DocH2 id="subsecciones">Subsecciones</DocH2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-4">
-        <Link
-          href="/apuntes/3/3.2_SystemV/3.2.1_Llaves"
-          className="group flex flex-col bg-surf-low border border-border rounded-lg p-4 hover:border-primary transition-colors"
-        >
-          <span className="font-mono text-[11px] text-muted mb-1">§ 3.2.1</span>
-          <span className="text-sm font-semibold text-text-base group-hover:text-primary transition-colors mb-1">
-            Llaves
-          </span>
-          <span className="text-xs text-text-dim leading-relaxed">
-            Generación de identificadores únicos con ftok().
-          </span>
-        </Link>
-        <Link
-          href="/apuntes/3/3.2_SystemV/3.2.2_Semaforos"
-          className="group flex flex-col bg-surf-low border border-border rounded-lg p-4 hover:border-primary transition-colors"
-        >
-          <span className="font-mono text-[11px] text-muted mb-1">§ 3.2.2</span>
-          <span className="text-sm font-semibold text-text-base group-hover:text-primary transition-colors mb-1">
-            Semáforos en System V
-          </span>
-          <span className="text-xs text-text-dim leading-relaxed">
-            Sincronización atómica con semget / semctl / semop.
-          </span>
-        </Link>
+int kill(pid_t pid, int sig);`}
+      />
+      <DocP>
+        El parámetro <InlineCode>pid</InlineCode> determina el destino:
+      </DocP>
+      <div className="my-3 overflow-x-auto rounded-lg border border-surf-high text-sm">
+        <table className="w-full">
+          <thead className="bg-surf-high">
+            <tr>
+              <th className="px-4 py-2 text-left text-primary">Valor de pid</th>
+              <th className="px-4 py-2 text-left text-text-dim">Destino de la señal</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-surf-high">
+            {[
+              ["pid > 0", "El proceso con ese PID específico"],
+              ["pid = 0", "Todos los procesos del mismo grupo que el emisor"],
+              ["pid = -1", "Todos los procesos cuyo UID real = UID efectivo del emisor (excepto init)"],
+              ["pid < -1", "Todos los procesos cuyo GID = valor absoluto de pid"],
+            ].map(([val, desc], i) => (
+              <tr key={val} className={i % 2 === 0 ? "bg-surf-low" : "bg-surf-mid"}>
+                <td className="px-4 py-2 font-mono text-primary">{val}</td>
+                <td className="px-4 py-2 text-text-dim">{desc}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+      <DocP>
+        Devuelve <InlineCode>0</InlineCode> en caso de éxito o{" "}
+        <InlineCode>-1</InlineCode> si falla (por ejemplo, si el proceso
+        emisor no tiene privilegios sobre el receptor).
+      </DocP>
+      <CodeBlock
+        filename="terminal"
+        code={`# Enviar SIGTERM (15) a un proceso
+kill 1234
+
+# Enviar SIGKILL (9) de forma explícita
+kill -9 1234
+
+# Enviar SIGINT (2) como lo haría Ctrl+C
+kill -2 1234`}
+      />
+
+      <DocH3 id="raise">Función raise()</DocH3>
+      <DocP>
+        Un proceso puede enviarse señales a sí mismo con{" "}
+        <InlineCode>raise()</InlineCode>:
+      </DocP>
+      <CodeBlock
+        filename="prototipo_raise.c"
+        code={`#include <signal.h>
+int raise(int sig);
+// Retorna 0 en caso de éxito, distinto de 0 en caso de error`}
+      />
+      <DocNote>
+        <InlineCode>raise(sig)</InlineCode> es equivalente a llamar{" "}
+        <InlineCode>kill(getpid(), sig)</InlineCode>. Es útil para que un
+        proceso se auto-suspenda, termine limpiamente o active su propio
+        manejador de señal.
+      </DocNote>
     </DocPage>
   );
 }

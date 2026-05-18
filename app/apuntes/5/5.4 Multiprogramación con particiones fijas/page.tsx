@@ -5,182 +5,102 @@ import DocPage, {
   DocUl,
   DocLi,
   DocNote,
-  CodeBlock,
-  InlineCode,
+  DocWarning,
 } from "@/components/DocPage";
 
 export const metadata = {
-  title: "2.5 wait() — BitácoraSO",
+  title: "5.4 Particiones Fijas | Portafolio SO",
 };
 
 const toc = [
-  { id: "teoria", label: "Teoría" },
-  { id: "prototipo", label: "Prototipos" },
-  { id: "macros", label: "Macros de análisis" },
-  { id: "codigo", label: "Código de ejemplo" },
-  { id: "ejecucion", label: "Ejecución y salida" },
-  { id: "reflexion", label: "Reflexión" },
+  { id: "particiones-fijas", label: "Particiones fijas" },
+  { id: "colas-independientes", label: "Colas independientes" },
+  { id: "cola-unica", label: "Cola única" },
+  { id: "algoritmos", label: "Algoritmos de asignación" },
 ];
-
-const waitC = `/* 2.5 wait()
-   Compilar: gcc -Wall wait_demo.c -o wait_demo
-   Ejecutar: ./wait_demo                                              */
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(void) {
-    pid_t hijo;
-    int estado;
-
-    if ((hijo = fork()) == -1) {
-        perror("fallo el fork");
-        exit(EXIT_FAILURE);
-    }
-    else if (hijo == 0) {
-        fprintf(stderr, "soy el hijo con pid = %ld\\n", (long)getpid());
-    }
-    else if (wait(&estado) != hijo) {
-        fprintf(stderr, "una senal debio interrumpir la espera\\n");
-    }
-    else {
-        fprintf(stderr, "soy el padre con pid = %ld e hijo con pid = %ld\\n",
-                (long)getpid(), (long)hijo);
-    }
-    exit(EXIT_SUCCESS);
-}`;
-
-const salida = `$ gcc -Wall wait_demo.c -o wait_demo
-$ ./wait_demo
-soy el hijo con pid = 682
-soy el padre con pid = 681 e hijo con pid = 682`;
 
 export default function Page() {
   return (
     <DocPage
-      section="2.5"
-      title="wait()"
-      category="Procesos e Hilos"
-      readTime="8 min"
+      section="5.4"
+      title="Multiprogramación con Particiones Fijas"
+      category="Administración de Memoria"
+      prev={{ href: "/apuntes/5/5.2_Sin_Intercambio", label: "5.2 – 5.3 Sin Intercambio" }}
+      next={{ href: "/apuntes/5/5.5_Reasignacion_Proteccion", label: "5.5 Reasignación y Protección" }}
       toc={toc}
-      prev={{
-        href: "/apuntes/2/2.4_Identificar_Procesos",
-        label: "2.4 Identificar procesos",
-      }}
-      next={{
-        href: "/apuntes/2/2.5_Wait/2.5.1_Waitpid",
-        label: "2.5.1 waitpid()",
-      }}
     >
-      <DocH2 id="teoria">Teoría</DocH2>
+      <DocH2 id="particiones-fijas">Multiprogramación con particiones fijas</DocH2>
       <DocP>
-        Tras la ejecución de <InlineCode>fork()</InlineCode>, padre e hijo
-        siguen su ejecución concurrentemente y cualquiera puede terminar
-        primero. Si el padre desea esperar a que su hijo termine, debe invocar{" "}
-        <InlineCode>wait()</InlineCode> o, de manera más general,{" "}
-        <InlineCode>waitpid()</InlineCode>. Estas llamadas notifican al padre
-        la finalización del hijo, le permiten recuperar su estado de
-        terminación y evitan la aparición de procesos zombi.
-      </DocP>
-      <DocP>
-        La llamada <InlineCode>wait()</InlineCode> suspende al proceso
-        invocante hasta que ocurre alguno de estos eventos:
-      </DocP>
-      <DocUl>
-        <DocLi><span>Uno de sus hijos termina su ejecución.</span></DocLi>
-        <DocLi><span>Un hijo se detiene.</span></DocLi>
-        <DocLi><span>El proceso que invoca recibe una señal.</span></DocLi>
-      </DocUl>
-      <DocP>
-        Si el proceso no tiene hijos, <InlineCode>wait()</InlineCode> retorna
-        inmediatamente. Si un hijo ya había terminado y aún no se había
-        recogido, también retorna de inmediato.
+        Para alojar varios procesos en memoria simultáneamente, la forma más
+        sencilla es dividir la memoria en{" "}
+        <strong className="text-primary">n particiones</strong> de tamaños
+        potencialmente distintos. Cada partición puede contener exactamente un
+        proceso; el grado de multiprogramación queda limitado al número de
+        particiones.
       </DocP>
 
-      <DocH2 id="prototipo">Prototipos</DocH2>
-      <CodeBlock filename="prototipos.h" code={`#include <sys/types.h>
-#include <sys/wait.h>
-
-pid_t wait    (int *stat_loc);
-pid_t waitpid (pid_t pid, int *wstatus, int options);`} />
+      <DocH2 id="colas-independientes">Colas de entrada independientes</DocH2>
       <DocP>
-        Si <InlineCode>wait()</InlineCode> retorna por la terminación o
-        detención de un hijo, el valor de retorno es positivo y corresponde
-        al PID de ese hijo. En caso de error retorna <InlineCode>-1</InlineCode>{" "}
-        y establece <InlineCode>errno</InlineCode>. Valores comunes de errno:
+        En este esquema (Figura 5-1a) cada partición tiene su propia cola de
+        trabajos esperando. Las desventajas son evidentes:
       </DocP>
       <DocUl>
         <DocLi>
-          <span>
-            <InlineCode>ECHILD</InlineCode> — el proceso no tiene hijos.
-          </span>
+          Si la cola de una partición grande está vacía, esa memoria se
+          desperdicia aunque otras colas estén llenas.
         </DocLi>
         <DocLi>
-          <span>
-            <InlineCode>EINTR</InlineCode> — la llamada fue interrumpida por
-            una señal.
-          </span>
+          Los trabajos pequeños no pueden aprovechar particiones grandes sin
+          desperdiciar espacio.
         </DocLi>
       </DocUl>
 
-      <DocH2 id="macros">Macros de análisis del estado</DocH2>
+      <DocH2 id="cola-unica">Cola única (Figura 5-1b)</DocH2>
       <DocP>
-        El parámetro <InlineCode>stat_loc</InlineCode> es un apuntador a un
-        entero donde el kernel almacena información sobre la terminación.
-        Para analizarlo se usan macros definidos en{" "}
-        <InlineCode>&lt;sys/wait.h&gt;</InlineCode>:
+        Una alternativa es mantener una{" "}
+        <strong className="text-secondary">sola cola global</strong>. Cada vez
+        que se libera una partición se carga el trabajo más cercano al frente de
+        la cola que se ajuste a ella. Estrategias posibles:
       </DocP>
       <DocUl>
         <DocLi>
-          <span>
-            <InlineCode>WIFEXITED(*stat_loc)</InlineCode> — verdadero si el
-            hijo terminó normalmente.
-          </span>
+          <strong className="text-primary">Primer ajuste:</strong> cargar el
+          primer trabajo de la cola que quepa. Simple pero puede desperdiciar
+          particiones grandes con tareas pequeñas.
         </DocLi>
         <DocLi>
-          <span>
-            <InlineCode>WEXITSTATUS(*stat_loc)</InlineCode> — si terminó
-            normalmente, los 8 bits menos significativos del valor pasado a
-            exit().
-          </span>
+          <strong className="text-secondary">Trabajo más grande:</strong> buscar
+          en toda la cola el trabajo más grande que quepa en la partición
+          liberada. Discrimina a los trabajos pequeños.
         </DocLi>
         <DocLi>
-          <span>
-            <InlineCode>WIFSIGNALED(*stat_loc)</InlineCode> — verdadero si
-            terminó por una señal no capturada.
-          </span>
-        </DocLi>
-        <DocLi>
-          <span>
-            <InlineCode>WTERMSIG(*stat_loc)</InlineCode> — número de la señal
-            que terminó al hijo.
-          </span>
+          <strong className="text-tertiary">Partición pequeña reservada:</strong>{" "}
+          mantener siempre disponible una partición pequeña para que los trabajos
+          pequeños no queden indefinidamente postergados.
         </DocLi>
       </DocUl>
 
-      <DocH2 id="codigo">Código de ejemplo</DocH2>
-      <CodeBlock filename="wait_demo.c" lang="c" code={waitC} />
-
-      <DocH2 id="ejecucion">Ejecución y salida</DocH2>
-      <CodeBlock filename="salida" lang="bash" code={salida} />
+      <DocH2 id="algoritmos">Evitar inanición (starvation)</DocH2>
       <DocP>
-        El padre se bloquea en <InlineCode>wait()</InlineCode> y solo imprime
-        su mensaje <em>después</em> de que el hijo terminó. Por eso el orden
-        de aparición es siempre el mismo.
+        Para evitar que los trabajos pequeños queden excluidos indefinidamente,
+        se puede aplicar la regla de{" "}
+        <strong className="text-tertiary">puntos de exclusión</strong>: un
+        trabajo elegible que sea excluido acumula un punto cada vez; cuando
+        llega a <em>k</em> puntos ya no puede ser excluido de nuevo, forzando
+        su ejecución.
       </DocP>
-
-      <DocH2 id="reflexion">Reflexión</DocH2>
-      <DocP>
-        <InlineCode>wait()</InlineCode> es el punto de sincronización más
-        básico entre padre e hijo. Sin él, el padre puede terminar antes que
-        el hijo (el hijo queda huérfano) o el hijo termina sin que nadie
-        recoja su estado (queda zombi). Es buena práctica que todo{" "}
-        <InlineCode>fork()</InlineCode> tenga un <InlineCode>wait()</InlineCode>{" "}
-        correspondiente, o un manejador de <InlineCode>SIGCHLD</InlineCode>{" "}
-        que lo haga asíncronamente.
-      </DocP>
+      <DocWarning>
+        Las particiones fijas provocan <strong>fragmentación interna</strong>:
+        si un proceso ocupa menos espacio que la partición asignada, el resto de
+        esa partición se desperdicia y no puede usarse para otro proceso. Este
+        problema se mitiga con particiones variables (ver sección 5.6).
+      </DocWarning>
+      <DocNote>
+        Las particiones fijas fueron utilizadas en sistemas IBM OS/MFT (Multiprogramming
+        with a Fixed number of Tasks). Hoy se usan técnicas más avanzadas como
+        paginación y segmentación, pero entender las particiones fijas es la base
+        conceptual para comprender sus limitaciones.
+      </DocNote>
     </DocPage>
   );
 }

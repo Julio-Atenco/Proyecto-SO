@@ -50,6 +50,41 @@ const sections = [
       { href: "/apuntes/3/3.5_Comandos_IPC",            label: "Comandos IPC" },
     ],
   },
+  {
+    id: "memoria",
+    title: "5. Administración de Memoria",
+    items: [
+      { href: "/apuntes/5/5.1_Introduccion_Memoria",    label: "5.1 Introducción" },
+      { href: "/apuntes/5/5.2_Sin_Intercambio",         label: "5.2 – 5.3 Sin Intercambio" },
+      { href: "/apuntes/5/5.4_Particiones_Fijas",       label: "5.4 Particiones Fijas" },
+      { href: "/apuntes/5/5.5_Reasignacion_Proteccion", label: "5.5 Reasignación y Protección" },
+      { href: "/apuntes/5/5.6_Intercambio",             label: "5.6 Intercambio (Swap)" },
+      { href: "/apuntes/5/5.7_Mapas_Bits",              label: "5.7 Mapas de Bits" },
+      { href: "/apuntes/5/5.8_Listas_Ligadas",          label: "5.8 Listas Ligadas" },
+      { href: "/apuntes/5/5.9_Memoria_Virtual",         label: "5.9 Memoria Virtual" },
+      { href: "/apuntes/5/5.10_Funciones_Memoria",      label: "5.10 Funciones de Memoria" },
+    ],
+  },
+  {
+    id: "archivos",
+    title: "6. Sistema de Archivos",
+    items: [
+      { href: "/apuntes/6/6.1_Introduccion_SA",   label: "6.1 Introducción" },
+      { href: "/apuntes/6/6.2_Estructura_Logica", label: "6.2 Estructura Lógica" },
+      { href: "/apuntes/6/6.3_Tipos_Archivos",    label: "6.3 Tipos de Archivos" },
+      { href: "/apuntes/6/6.4_Dispositivos_ES",   label: "6.4 Dispositivos E/S" },
+    ],
+  },
+  {
+    id: "senales",
+    title: "7. Señales",
+    items: [
+      { href: "/apuntes/7/7.1_Introduccion_Senales", label: "7.1 Introducción" },
+      { href: "/apuntes/7/7.2_Tipos_Senales",        label: "7.2 Tipos de Señales" },
+      { href: "/apuntes/7/7.3_Tratamiento_Senales",  label: "7.3 Tratamiento de Señales" },
+      { href: "/apuntes/7/7.4_Alarma_Pausa",         label: "7.4 Alarma y Pausa" },
+    ],
+  },
 ];
 
 function isInSection(pathname: string, items: { href: string }[]) {
