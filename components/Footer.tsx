@@ -5,6 +5,7 @@ const pageLinks = [
   { href: "/apuntes",    label: "Apuntes" },
   { href: "/glosario",   label: "Glosario" },
   { href: "/programas",  label: "Programas" },
+  { href: "/mini-shell",  label: "Mini-Shell" },
 ];
 
 const externalLinks = [
